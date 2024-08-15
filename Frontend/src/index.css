@@ -1,0 +1,264 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+  .new-amsterdam-regular {
+    font-family: "New Amsterdam", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .montserrat-alternates-thin {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+  }
+  
+  .montserrat-alternates-extralight {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+  }
+  
+  .montserrat-alternates-light {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .montserrat-alternates-regular {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .montserrat-alternates-medium {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  .montserrat-alternates-semibold {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+  }
+  
+  .montserrat-alternates-bold {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .montserrat-alternates-extrabold {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+  }
+  
+  .montserrat-alternates-black {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+  }
+  
+  .montserrat-alternates-thin-italic {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 100;
+    font-style: italic;
+  }
+  
+  .montserrat-alternates-extralight-italic {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 200;
+    font-style: italic;
+  }
+  
+  .montserrat-alternates-light-italic {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+  }
+  
+  .montserrat-alternates-regular-italic {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+  
+  .montserrat-alternates-medium-italic {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 500;
+    font-style: italic;
+  }
+  
+  .montserrat-alternates-semibold-italic {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 600;
+    font-style: italic;
+  }
+  
+  .montserrat-alternates-bold-italic {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+  }
+  
+  .montserrat-alternates-extrabold-italic {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 800;
+    font-style: italic;
+  }
+  
+  .montserrat-alternates-black-italic {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+  }
+  
+  .grey-qo-regular {
+    font-family: "Grey Qo", cursive;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  /*search csss*/
+  .wrap-input-17 * {
+    box-sizing: border-box;
+    
+   }
+   
+   .wrap-input-17 .search-box{
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+   }
+   
+   .wrap-input-17 .input-search{
+    height: 50px;
+    width: 50px;
+    border-style: none;
+    padding: 10px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    outline: none;
+    border-radius: 25px;
+    transition: all .5s ease-in-out;
+    background-color: 
+   transparent;
+    padding-right: 40px;
+    color:
+   #fff;
+   }
+   .wrap-input-17 .input-search::placeholder{
+    color:
+   rgba(255,255,255,.5);
+    font-size: 18px;
+    letter-spacing: 2px;
+    font-weight: 100;
+   }
+   .wrap-input-17 .btn-search{
+    width: 50px;
+    height: 50px;
+    border-style: none;
+    font-size: 20px;
+    font-weight: bold;
+    outline: none;
+    cursor: pointer;
+    border-radius: 50%;
+    position: absolute;
+    right: 0px;
+    color:
+   #ffffff ;
+    background-color:
+   transparent;
+    pointer-events: painted;  
+   }
+   .wrap-input-17 .btn-search:focus ~ .input-search{
+    width: 300px;
+    border-radius: 0px;
+    background-color: 
+   transparent;
+    border-bottom:1px solid 
+   rgba(255,255,255,.5);
+    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+   }
+   .wrap-input-17 .input-search:focus{
+    width: 300px;
+    border-radius: 0px;
+    background-color: 
+   transparent;
+    border-bottom:1px solid 
+   rgba(255,255,255,.5);
+    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+   }
+  /*animation*/
+  .hero-left {
+    animation: leftanimation 2s ease-in-out;
+}
+
+@keyframes leftanimation {
+    from {
+        transform: translateX(-200px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.hero-right {
+    animation: rightanimation 3s ease-in-out;
+}
+
+@keyframes rightanimation {
+    from {
+        transform: rotate(0deg);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(720deg);
+        opacity: 1;
+    }
+}
+
+/* Global or component-specific CSS */
+.heading {
+    background: linear-gradient(to right, green, #2bb341, yellow, yellow);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-loop {
+    animation: loopanimation 5s infinite ease-in-out;
+}
+
+@keyframes loopanimation {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-30px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.autoShow {
+  animation: autoAnimation both;
+  animation-timeline: view(100% 20%); /* Custom usage */
+}
+
+@keyframes autoAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(200px) scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
