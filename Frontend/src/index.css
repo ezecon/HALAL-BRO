@@ -153,7 +153,7 @@
    .wrap-input-17 .input-search::placeholder{
     color:
    rgba(255,255,255,.5);
-    font-size: 18px;
+    font-size: 14px;
     letter-spacing: 2px;
     font-weight: 100;
    }
@@ -175,7 +175,7 @@
     pointer-events: painted;  
    }
    .wrap-input-17 .btn-search:focus ~ .input-search{
-    width: 300px;
+    width: 190px;
     border-radius: 0px;
     background-color: 
    transparent;
@@ -184,7 +184,7 @@
     transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
    }
    .wrap-input-17 .input-search:focus{
-    width: 300px;
+    width: 190px;
     border-radius: 0px;
     background-color: 
    transparent;
@@ -248,7 +248,7 @@
 
 .autoShow {
   animation: autoAnimation both;
-  animation-timeline: view(100% 20%); /* Custom usage */
+  animation-timeline: view(100% 10%);
 }
 
 @keyframes autoAnimation {
@@ -261,4 +261,79 @@
     transform: translateY(0) scale(1);
   }
 }
+
+/*footer**/
+.footer p{
+  color: white;
+  font-style: oblique;
+}
+.gradient:hover{
+  background: linear-gradient(to right, #16be16, #d9ff00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* Applying animation-timeline if needed */
+.footer-left-1 {
+  animation: leftanimation 2s ease-in-out both;
+  animation-timeline: view(90% 10%);
+}
+
+@keyframes leftanimation {
+  from {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.footer-right-1 {
+  animation: rightanimation 2s ease-in-out both;
+  animation-timeline: view(90% 10%);
+}
+
+@keyframes rightanimation {
+  from {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.image-slider {
+  overflow: hidden; /* Hide overflow */
+  position: relative;
+}
+
+.slider-wrapper {
+  display: flex;
+  width: calc(100% * 2); /* Double the width to ensure the loop effect */
+  animation: slide 10s linear infinite; /* Adjust duration to control speed */
+}
+
+.slider-image {
+  flex: 0 0 auto; /* Prevent shrinking and ensure fixed width */
+  width: 400px; /* Adjust as needed */
+  margin-right: 15px; /* Adjust the gap between images */
+  border-radius: 25px;
+  object-fit: cover; /* Ensures the image covers the entire area and respects border-radius */
+}
+
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 

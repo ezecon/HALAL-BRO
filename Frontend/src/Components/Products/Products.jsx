@@ -7,8 +7,8 @@ export default function Products() {
         PRODUCTS
       </h1>
       <div
-        className="gap-3 relative w-full h-[500px] py-5 flex justify-center items-center bg-cover bg-center"
-        style={{ backgroundImage: "url('.jpg')" }}
+        className="gap-3 relative w-full h-[500px] py-5 flex justify-center items-center"
+        
       >
         <div className="w-[350px] h-full bg-[rgba(112,96,96,0.2)] shadow-lg border border-[rgba(255,255,255,0.25)] border-t-[rgba(255,255,255,0.5)] border-l-[rgba(255,255,255,0.5)] rounded-[25px] backdrop-blur-sm p-10 flex flex-col justify-between items-center">
           <h1 className="tracking-widest text-white new-amsterdam-regular text-3xl">Slipper</h1>
