@@ -112,7 +112,7 @@ export default function Navbar() {
               <MenuItem>Menu Item 3</MenuItem>
             </MenuList>
           </Menu>
-    
+       
           <h1>Md. Econozzaman Econ</h1>
           </div>
           <h1 className="text-[green] cursor-pointer hover:text-gray-300">Cart</h1>
