@@ -99,12 +99,11 @@ export default function Navbar() {
             </svg>
           </IconButton>
         </div>
-        <div className="flex flex-col montserrat-alternates-regular gap-y-4">
-          
-          <div className="flex gap-3 justify-center items-center text-[green]">
+        <div className="flex flex-col montserrat-alternates-regular gap-y-4 h-full">
+        <div className="flex gap-3 justify-center items-center text-[green]">
           <Menu>
             <MenuHandler>
-                <Avatar src="/1.jpg" className=" border-green-600 border-2" size="md" />
+              <Avatar src="/1.jpg" className="border-green-600 border-2" size="md" />
             </MenuHandler>
             <MenuList>
               <MenuItem>Menu Item 1</MenuItem>
@@ -112,13 +111,18 @@ export default function Navbar() {
               <MenuItem>Menu Item 3</MenuItem>
             </MenuList>
           </Menu>
-       
           <h1>Md. Econozzaman Econ</h1>
-          </div>
-          <h1 className="text-[green] cursor-pointer hover:text-gray-300">Cart</h1>
-          <h1 className="text-[green] cursor-pointer hover:text-gray-300">Products</h1>
-          <h1 className="text-[green] cursor-pointer hover:text-gray-300">About</h1>
         </div>
+        <div className="bg-[#cdcecd67] p-5 rounded-lg flex justify-between">
+          <h1 className="text-[green] cursor-pointer hover:text-gray-300">Dashboard</h1>
+          <h1 className="text-[green] cursor-pointer hover:text-gray-300">Logout</h1>
+        </div>
+        <h1 className="text-[green] cursor-pointer hover:text-gray-300">Cart</h1>
+        <h1 className="text-[green] cursor-pointer hover:text-gray-300">Products</h1>
+        <h1 className="text-[green] cursor-pointer hover:text-gray-300">About</h1>
+        
+      </div>
+
 
       </Drawer>
       </>
