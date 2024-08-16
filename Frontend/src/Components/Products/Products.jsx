@@ -1,32 +1,38 @@
 import { Button } from "@material-tailwind/react";
+import ProductCard from "../ProductCard/ProductCard";
+import { motion } from "framer-motion";
 
 export default function Products() {
   return (
-    <div className="flex flex-col items-center autoShow">
-      <h1 className="heading new-amsterdam-regular text-6xl text-center m-10 ">
+    <motion.div
+      className="flex flex-col items-center w-full"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      <h1 className="heading new-amsterdam-regular text-4xl sm:text-5xl md:text-6xl text-center m-10">
         PRODUCTS
       </h1>
-      <div
-        className="gap-3 relative w-full h-[500px] py-5 flex justify-center items-center"
-        
-      >
-        <div className="w-[350px] h-full bg-[rgba(112,96,96,0.2)] shadow-lg border border-[rgba(255,255,255,0.25)] border-t-[rgba(255,255,255,0.5)] border-l-[rgba(255,255,255,0.5)] rounded-[25px] backdrop-blur-sm p-10 flex flex-col justify-between items-center">
-          <h1 className="tracking-widest text-white new-amsterdam-regular text-3xl">Slipper</h1>
-          <img src="/shoes3.png" alt="Slipper" className="w-full hero-loop rounded" />
-          <p className="tracking-widest text-white new-amsterdam-regular text-2xl">12$</p>
-          <a
-          href="#"
-          className="absolute bottom-[-20px] bg-white inline-block no-underline py-3 px-6 rounded-full shadow-md font-medium text-[#1e6b7b] transition-all duration-200 hover:tracking-widest"
-        >
-          Add to Cart
-        </a>
-        </div>
-       
+      <div className="grid justify-center items-center md:grid-cols-2 lg:grid-cols-4 gap-6 gap-y-10 w-full px-4 sm:px-6 md:px-10 py-5 lg:px-24">
+        {Array(10)
+          .fill(0)
+          .map((_, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              viewport={{ once: false }}
+            >
+              <ProductCard />
+            </motion.div>
+          ))}
       </div>
 
       <div className="flex justify-center mt-5">
         <Button>See More</Button>
       </div>
-    </div>
+    </motion.div>
   );
 }

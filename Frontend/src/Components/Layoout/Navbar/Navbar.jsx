@@ -28,7 +28,7 @@ const temp =()=>{
            <>
             <Menu>
             <MenuHandler>
-                <Avatar src="/1.jpg" className=" border-green-600 border-2" size="md" />
+                <Avatar src="/1.jpg" className=" border-green-600 border-2 cursor-pointer" size="md" />
             </MenuHandler>
             <MenuList>
               <MenuItem>Profile</MenuItem>
