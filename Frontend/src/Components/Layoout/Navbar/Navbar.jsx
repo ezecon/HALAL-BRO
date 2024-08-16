@@ -1,10 +1,11 @@
-import { Avatar,  Drawer, IconButton, Menu, MenuHandler, MenuItem, MenuList } from "@material-tailwind/react";
+import { Avatar,  Button,  Drawer, IconButton, Menu, MenuHandler, MenuItem, MenuList } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { CgDetailsMore } from "react-icons/cg";
 
 export default function Navbar() {
   const [displayComponent, setDisplayComponent] = useState(null); // State to hold the rendered component
+  const [data, setData] = useState(true)
   const [openRight, setOpenRight] = useState(false)
   const openDrawerRight = () => setOpenRight(true);
   const closeDrawerRight = () => setOpenRight(false);
@@ -20,16 +21,28 @@ export default function Navbar() {
             <h1 className="text-white cursor-pointer hover:text-gray-300">Cart</h1>
             <h1 className="text-white cursor-pointer hover:text-gray-300">Products</h1>
             <h1 className="text-white cursor-pointer hover:text-gray-300">About</h1>
+           {data ? (
+           <>
             <Menu>
             <MenuHandler>
                 <Avatar src="/1.jpg" className=" border-green-600 border-2" size="md" />
             </MenuHandler>
             <MenuList>
-              <MenuItem>Menu Item 1</MenuItem>
-              <MenuItem>Menu Item 2</MenuItem>
-              <MenuItem>Menu Item 3</MenuItem>
+              <MenuItem>Profile</MenuItem>
+              <MenuItem>Dashboard</MenuItem>
+              <MenuItem>Logout</MenuItem>
             </MenuList>
           </Menu>
+           </>) : (
+            <>
+            <div className="flex gap-2">
+              <Button>Login</Button>
+              <Button className="text-black bg-white">Signin</Button>
+
+            </div>
+            </>
+           )
+           }
           </>
         );
       } else {
@@ -99,29 +112,35 @@ export default function Navbar() {
             </svg>
           </IconButton>
         </div>
-        <div className="flex flex-col montserrat-alternates-regular gap-y-4 h-full">
-        <div className="flex gap-3 justify-center items-center text-[green]">
-          <Menu>
-            <MenuHandler>
-              <Avatar src="/1.jpg" className="border-green-600 border-2" size="md" />
-            </MenuHandler>
-            <MenuList>
-              <MenuItem>Menu Item 1</MenuItem>
-              <MenuItem>Menu Item 2</MenuItem>
-              <MenuItem>Menu Item 3</MenuItem>
-            </MenuList>
-          </Menu>
-          <h1>Md. Econozzaman Econ</h1>
-        </div>
-        <div className="bg-[#cdcecd67] p-5 rounded-lg flex justify-between">
-          <h1 className="text-[green] cursor-pointer hover:text-gray-300">Dashboard</h1>
-          <h1 className="text-[green] cursor-pointer hover:text-gray-300">Logout</h1>
-        </div>
-        <h1 className="text-[green] cursor-pointer hover:text-gray-300">Cart</h1>
-        <h1 className="text-[green] cursor-pointer hover:text-gray-300">Products</h1>
-        <h1 className="text-[green] cursor-pointer hover:text-gray-300">About</h1>
-        
-      </div>
+       
+          
+          {data ? (
+           <>
+            <div className="flex flex-col montserrat-alternates-regular gap-y-4 h-full">
+            <div className="flex gap-3 justify-center items-center text-[green]">
+            <Avatar src="/1.jpg" className="border-green-600 border-2" size="md" />
+            <h1>Md. Econozzaman Econ</h1>
+            <div className="bg-[#cdcecd67] p-5 rounded-lg flex justify-between">
+              <h1 className="text-[green] cursor-pointer hover:text-gray-300">Dashboard</h1>
+              <h1 className="text-[green] cursor-pointer hover:text-gray-300">Logout</h1>
+            </div>
+            </div>
+       
+            <h1 className="text-[green] cursor-pointer hover:text-gray-300">Cart</h1>
+            <h1 className="text-[green] cursor-pointer hover:text-gray-300">Products</h1>
+            <h1 className="text-[green] cursor-pointer hover:text-gray-300">About</h1>
+            
+          </div>
+           </>) : (
+            <>
+            <div className=" flex justify-between px-10">
+              <Button>Login</Button>
+              <Button className="text-black bg-white">Signin</Button>
+
+            </div>
+            </>
+           )}
+
 
 
       </Drawer>
