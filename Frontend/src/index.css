@@ -122,128 +122,123 @@
     font-style: normal;
   }
   
-  /*search csss*/
-  .wrap-input-17 * {
-    box-sizing: border-box;
-    
-   }
-   
-   .wrap-input-17 .search-box{
-    width: fit-content;
-    height: fit-content;
-    position: relative;
-   }
-   
-   .wrap-input-17 .input-search{
-    height: 50px;
-    width: 50px;
-    border-style: none;
-    padding: 10px;
-    font-size: 18px;
-    letter-spacing: 2px;
-    outline: none;
-    border-radius: 25px;
-    transition: all .5s ease-in-out;
-    background-color: 
-   transparent;
-    padding-right: 40px;
-    color:
-   #fff;
-   }
-   .wrap-input-17 .input-search::placeholder{
-    color:
-   rgba(255,255,255,.5);
-    font-size: 14px;
-    letter-spacing: 2px;
-    font-weight: 100;
-   }
-   .wrap-input-17 .btn-search{
-    width: 50px;
-    height: 50px;
-    border-style: none;
-    font-size: 20px;
-    font-weight: bold;
-    outline: none;
-    cursor: pointer;
-    border-radius: 50%;
-    position: absolute;
-    right: 0px;
-    color:
-   #ffffff ;
-    background-color:
-   transparent;
-    pointer-events: painted;  
-   }
-   .wrap-input-17 .btn-search:focus ~ .input-search{
-    width: 190px;
-    border-radius: 0px;
-    background-color: 
-   transparent;
-    border-bottom:1px solid 
-   rgba(255,255,255,.5);
-    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
-   }
-   .wrap-input-17 .input-search:focus{
-    width: 190px;
-    border-radius: 0px;
-    background-color: 
-   transparent;
-    border-bottom:1px solid 
-   rgba(255,255,255,.5);
-    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
-   }
-  /*animation*/
-  .hero-left {
-    animation: leftanimation 2s ease-in-out;
+/* Search box CSS */
+.wrap-input-17 * {
+  box-sizing: border-box;
+}
+
+.wrap-input-17 .search-box {
+  width: fit-content;
+  height: fit-content;
+  position: relative;
+}
+
+.wrap-input-17 .input-search {
+  height: 50px;
+  width: 50px;
+  border-style: none;
+  padding: 10px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  outline: none;
+  border-radius: 25px;
+  transition: all 0.5s ease-in-out;
+  background-color: transparent;
+  padding-right: 40px;
+  color: #fff;
+}
+
+.wrap-input-17 .input-search::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  letter-spacing: 2px;
+  font-weight: 100;
+}
+
+.wrap-input-17 .btn-search {
+  width: 50px;
+  height: 50px;
+  border-style: none;
+  font-size: 20px;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  right: 0px;
+  color: #ffffff;
+  background-color: transparent;
+  pointer-events: painted;
+}
+
+.wrap-input-17 .btn-search:focus ~ .input-search {
+  width: 190px;
+  border-radius: 0px;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
+}
+
+.wrap-input-17 .input-search:focus {
+  width: 190px;
+  border-radius: 0px;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
+}
+
+/* Animations */
+.hero-left {
+  animation: leftanimation 2s ease-in-out;
 }
 
 @keyframes leftanimation {
-    from {
-        transform: translateX(-200px);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+  from {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .hero-right {
-    animation: rightanimation 3s ease-in-out;
+  animation: rightanimation 3s ease-in-out;
 }
 
 @keyframes rightanimation {
-    from {
-        transform: rotate(0deg);
-        opacity: 0;
-    }
-    to {
-        transform: rotate(720deg);
-        opacity: 1;
-    }
+  from {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 /* Global or component-specific CSS */
 .heading {
-    background: linear-gradient(to right, green, #2bb341, yellow, yellow);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  background: linear-gradient(to right, green, #2bb341, yellow, yellow);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero-loop {
-    animation: loopanimation 5s infinite ease-in-out;
+  animation: loopanimation 5s infinite ease-in-out;
 }
 
 @keyframes loopanimation {
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-30px);
-    }
-    100% {
-        transform: translateY(0);
-    }
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .autoShow {
@@ -262,33 +257,21 @@
   }
 }
 
-/*footer**/
-.footer p{
+/* Footer */
+.footer p {
   color: white;
   font-style: oblique;
 }
-.gradient:hover{
+
+.gradient:hover {
   background: linear-gradient(to right, #16be16, #d9ff00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-
-/* Applying animation-timeline if needed */
 .footer-left-1 {
   animation: leftanimation 2s ease-in-out both;
   animation-timeline: view(90% 10%);
-}
-
-@keyframes leftanimation {
-  from {
-    transform: translateX(-200px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
 }
 
 .footer-right-1 {
@@ -296,17 +279,43 @@
   animation-timeline: view(90% 10%);
 }
 
-@keyframes rightanimation {
-  from {
-    transform: translateX(200px);
-    opacity: 0;
-  }
-  to {
+/* Image Slider */
+.image-slider {
+  overflow: hidden; /* Hide overflow */
+  width: 100%; /* Ensure the slider takes up the full width of the screen */
+  position: relative;
+}
+
+.slider-wrapper {
+  display: flex;
+  width: calc(100% * var(--number-of-images)); /* Dynamic width based on the number of images */
+  animation: slide 10s linear infinite; /* Adjust duration to control speed */
+}
+
+.slider-image {
+  flex: 0 0 auto; /* Prevent shrinking and ensure fixed width */
+  width: 100%; /* Ensures the image takes up the full width of the container on mobile */
+  max-width: 400px; /* Maintain max width for larger screens */
+  margin-right: 15px; /* Adjust the gap between images */
+  border-radius: 25px;
+  object-fit: cover; /* Ensures the image covers the entire area and respects border-radius */
+}
+
+@keyframes slide {
+  0% {
     transform: translateX(0);
-    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
   }
 }
 
-
-
-
+@media (max-width: 768px) {
+  .slider-wrapper {
+    width: calc(100% * var(--number-of-images)); /* Adjust as needed for mobile */
+  }
+  .slider-image {
+    width: 100%; /* Image takes full width on mobile */
+    margin-right: 10px; /* Smaller gap for mobile */
+  }
+}
