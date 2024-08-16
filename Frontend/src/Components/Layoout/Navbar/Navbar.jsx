@@ -50,7 +50,7 @@ export default function Navbar() {
 
   return (
     <div className="bg-[#fdfdfd33] w-full h-20 flex justify-between items-center px-6">
-      <h1 className="flex gap-2 justify-center items-center text-white text-2xl font-bold montserrat-alternates-bold">
+      <h1 className="flex gap-2 justify-center items-center text-white text-xl sm:text-2xl font-bold montserrat-alternates-bold">
         <img src="logo/logo.jpg" className="w-14 rounded-full" alt="" />HALAL-BRO
       </h1>
       <div className="flex items-center gap-6">
