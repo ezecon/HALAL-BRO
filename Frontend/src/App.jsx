@@ -1,10 +1,15 @@
-import Home from "./Pages/Home/Home";
+import { Toaster } from "react-hot-toast";
+import { RouterProvider } from "react-router-dom";
+import "./App.css";
+import router from "./Components/Routes/Routes";
 
-
-export default function App() {
+function App() {
   return (
-    
-      <Home/>
-
-  )
+    <>
+      <RouterProvider router={router} />
+      <Toaster />
+    </>
+  );
 }
+
+export default App;
