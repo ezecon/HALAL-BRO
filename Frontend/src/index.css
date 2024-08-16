@@ -278,27 +278,26 @@
   animation: rightanimation 2s ease-in-out both;
   animation-timeline: view(90% 10%);
 }
-
-/* Image Slider */
+/*image slider*/
 .image-slider {
-  overflow: hidden; /* Hide overflow */
-  width: 100%; /* Ensure the slider takes up the full width of the screen */
+  overflow: hidden;
+  width: 100%;
   position: relative;
 }
 
 .slider-wrapper {
   display: flex;
-  width: calc(100% * var(--number-of-images)); /* Dynamic width based on the number of images */
-  animation: slide 10s linear infinite; /* Adjust duration to control speed */
+  width: calc(200%);
+  animation: slide 20s linear infinite;
 }
 
 .slider-image {
-  flex: 0 0 auto; /* Prevent shrinking and ensure fixed width */
-  width: 100%; /* Ensures the image takes up the full width of the container on mobile */
-  max-width: 400px; /* Maintain max width for larger screens */
-  margin-right: 15px; /* Adjust the gap between images */
+  flex: 0 0 auto;
+  width: 25%;
+  max-width: 200px;
+  margin-right: 15px;
   border-radius: 25px;
-  object-fit: cover; /* Ensures the image covers the entire area and respects border-radius */
+  object-fit: cover;
 }
 
 @keyframes slide {
@@ -306,16 +305,13 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
 
 @media (max-width: 768px) {
-  .slider-wrapper {
-    width: calc(100% * var(--number-of-images)); /* Adjust as needed for mobile */
-  }
   .slider-image {
-    width: 100%; /* Image takes full width on mobile */
-    margin-right: 10px; /* Smaller gap for mobile */
+    width: 50%;
+    margin-right: 10px;
   }
 }
