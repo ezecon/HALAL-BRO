@@ -9,6 +9,9 @@ export default function Navbar() {
   const [openRight, setOpenRight] = useState(false)
   const openDrawerRight = () => setOpenRight(true);
   const closeDrawerRight = () => setOpenRight(false);
+const temp =()=>{
+  setData(false)
+}
   useEffect(() => {
     const smMediaQuery = window.matchMedia('(max-width: 640px)');
 
@@ -18,9 +21,9 @@ export default function Navbar() {
         // Small screen
         setDisplayComponent(
           <>
-            <h1 className="text-white cursor-pointer hover:text-gray-300">Cart</h1>
-            <h1 className="text-white cursor-pointer hover:text-gray-300">Products</h1>
-            <h1 className="text-white cursor-pointer hover:text-gray-300">About</h1>
+            <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Cart</h1>
+            <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Products</h1>
+            <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">About</h1>
            {data ? (
            <>
             <Menu>
@@ -30,13 +33,13 @@ export default function Navbar() {
             <MenuList>
               <MenuItem>Profile</MenuItem>
               <MenuItem>Dashboard</MenuItem>
-              <MenuItem>Logout</MenuItem>
+              <MenuItem onClick={temp}>Logout</MenuItem>
             </MenuList>
           </Menu>
            </>) : (
             <>
             <div className="flex gap-2">
-              <Button>Login</Button>
+              <Button className="bg-green-500">Login</Button>
               <Button className="text-black bg-white">Signin</Button>
 
             </div>
@@ -59,7 +62,7 @@ export default function Navbar() {
 
     // Clean up the event listener on component unmount
     return () => smMediaQuery.removeEventListener('change', handleScreenSizeChange);
-  }, []);
+  });
 
   return (
     <div className="bg-[#fdfdfd33] w-full h-20 flex justify-between items-center px-6">
@@ -117,25 +120,26 @@ export default function Navbar() {
           {data ? (
            <>
             <div className="flex flex-col montserrat-alternates-regular gap-y-4 h-full">
-            <div className="flex gap-3 justify-center items-center text-[green]">
-            <Avatar src="/1.jpg" className="border-green-600 border-2" size="md" />
-            <h1>Md. Econozzaman Econ</h1>
-            <div className="bg-[#cdcecd67] p-5 rounded-lg flex justify-between">
-              <h1 className="text-[green] cursor-pointer hover:text-gray-300">Dashboard</h1>
-              <h1 className="text-[green] cursor-pointer hover:text-gray-300">Logout</h1>
-            </div>
-            </div>
-       
-            <h1 className="text-[green] cursor-pointer hover:text-gray-300">Cart</h1>
-            <h1 className="text-[green] cursor-pointer hover:text-gray-300">Products</h1>
-            <h1 className="text-[green] cursor-pointer hover:text-gray-300">About</h1>
+              <div className="flex gap-3 justify-center items-center text-[green]">
+                <Avatar src="/1.jpg" className="border-green-600 border-2" size="md" />
+                <h1>Md. Econozzaman Econ</h1>
+                
+              </div>
+              <div className="bg-[#cdcecd67] p-5 rounded-lg flex justify-between">
+                  <h1 className="text-[green] cursor-pointer hover:text-gray-300">Dashboard</h1>
+                  <h1 onClick={temp}className="text-[green] cursor-pointer hover:text-gray-300">Logout</h1>
+                </div>
+              <h1 className="text-[green] cursor-pointer hover:text-gray-300">Cart</h1>
+              <h1 className="text-[green] cursor-pointer hover:text-gray-300">Products</h1>
+              <h1 className="text-[green] cursor-pointer hover:text-gray-300">About</h1>
             
           </div>
            </>) : (
             <>
             <div className=" flex justify-between px-10">
-              <Button>Login</Button>
+            <Button className="bg-green-500">Login</Button>
               <Button className="text-black bg-white">Signin</Button>
+
 
             </div>
             </>
