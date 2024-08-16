@@ -58,6 +58,7 @@ export default function Products() {
       <h1 className="heading new-amsterdam-regular text-4xl sm:text-5xl md:text-6xl text-center m-10">
         PRODUCTS
       </h1>
+<<<<<<< HEAD
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 gap-y-10 w-full px-4 sm:px-6 md:px-10 py-5 lg:px-24">
         {data.map((item, index) => (
           <div
@@ -69,6 +70,22 @@ export default function Products() {
             <ProductCard key={data._id} product={item} />
           </div>
         ))}
+=======
+      <div className="grid justify-center items-center md:grid-cols-2 lg:grid-cols-4 gap-6 gap-y-10 w-full px-4 sm:px-6 md:px-10 py-5 lg:px-24">
+        {Array(10)
+          .fill(0)
+          .map((_, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              viewport={{ once: true}}
+            >
+              <ProductCard />
+            </motion.div>
+          ))}
+>>>>>>> d86d9e9304e3b7f3b207d58f5e40995ec4d40bff
       </div>
 
       <div className="flex justify-center mt-5">
@@ -77,3 +94,7 @@ export default function Products() {
     </div>
   );
 }
+<<<<<<< HEAD
+=======
+   
+>>>>>>> d86d9e9304e3b7f3b207d58f5e40995ec4d40bff
