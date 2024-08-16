@@ -1,154 +1,219 @@
-import { Avatar,  Button,  Drawer, IconButton, Menu, MenuHandler, MenuItem, MenuList } from "@material-tailwind/react";
+import {
+  Avatar,
+  Button,
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  Input,
+  Menu,
+  MenuHandler,
+  MenuItem,
+  MenuList,
+  Option,
+  Select,
+} from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { CiSearch } from "react-icons/ci";
-import { CgDetailsMore } from "react-icons/cg";
+import axios from "axios";
+import { toast } from 'react-hot-toast'; // Import toast
 
 export default function Navbar() {
-  const [displayComponent, setDisplayComponent] = useState(null); // State to hold the rendered component
-  const [data, setData] = useState(true)
-  const [openRight, setOpenRight] = useState(false)
-  const openDrawerRight = () => setOpenRight(true);
-  const closeDrawerRight = () => setOpenRight(false);
-const temp =()=>{
-  setData(false)
-}
-  useEffect(() => {
-    const smMediaQuery = window.matchMedia('(max-width: 640px)');
+  const [displayComponent, setDisplayComponent] = useState(null);
+  const [data, setData] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [productName, setProductName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+  const [photo, setPhoto] = useState(null);
 
-    // Function to update the component based on the screen size
+  const handleOpen = () => setOpen(true); // Open dialog
+  const handleClose = () => setOpen(false); // Close dialog
+
+  const temp = () => {
+    setData(false);
+  };
+
+  const handleSubmit = async () => {
+    if (!productName || !description || !price || !category || !photo) {
+      toast.error("Complete all fields");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", productName);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("category", category);
+    formData.append("photo", photo);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/v2/products",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success("Product uploaded successfully!");
+        handleClose(); // Close dialog
+        setProductName("");
+        setDescription("");
+        setPrice("");
+        setCategory("");
+        setPhoto(null);
+      }
+    } catch (error) {
+      console.error("Failed to upload product", error);
+      toast.error("Failed to upload product");
+    }
+  };
+
+  useEffect(() => {
+    const smMediaQuery = window.matchMedia("(max-width: 640px)");
+
     const handleScreenSizeChange = (e) => {
       if (!e.matches) {
-        // Small screen
         setDisplayComponent(
-          <>
-            <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Cart</h1>
-            <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Products</h1>
-            <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">About</h1>
-           {data ? (
-           <>
-            <Menu>
+          <Menu>
             <MenuHandler>
-                <Avatar src="/1.jpg" className=" border-green-600 border-2 cursor-pointer" size="md" />
+              <Avatar
+                src="/1.jpg"
+                className="border-green-600 border-2 cursor-pointer"
+                size="md"
+              />
             </MenuHandler>
             <MenuList>
               <MenuItem>Profile</MenuItem>
-              <MenuItem>Dashboard</MenuItem>
+              <MenuItem onClick={handleOpen}>Upload</MenuItem>
+              <MenuItem>Products</MenuItem>
+              <MenuItem>About</MenuItem>
               <MenuItem onClick={temp}>Logout</MenuItem>
             </MenuList>
           </Menu>
-           </>) : (
-            <>
-            <div className="flex gap-2">
-              <Button className="bg-green-500">Login</Button>
-              <Button className="text-black bg-white">Signin</Button>
-
-            </div>
-            </>
-           )
-           }
-          </>
         );
       } else {
-        // Large screen
-        setDisplayComponent(<CgDetailsMore onClick={openDrawerRight} className="text-white text-2xl"/>);
+        setDisplayComponent(
+          <>
+            <h1
+              onClick={handleOpen}
+              className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]"
+            >
+              Upload
+            </h1>
+            <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">
+              Products
+            </h1>
+            <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">
+              About
+            </h1>
+            {data ? (
+              <Menu>
+                <MenuHandler>
+                  <Avatar
+                    src="/1.jpg"
+                    className="border-green-600 border-2 cursor-pointer"
+                    size="md"
+                  />
+                </MenuHandler>
+                <MenuList>
+                  <MenuItem>Profile</MenuItem>
+                  <MenuItem onClick={temp}>Logout</MenuItem>
+                </MenuList>
+              </Menu>
+            ) : (
+              <div className="flex gap-2">
+                <Button className="bg-green-500">Login</Button>
+                <Button className="text-black bg-white">Signin</Button>
+              </div>
+            )}
+          </>
+        );
       }
     };
 
-    // Check the initial screen size
     handleScreenSizeChange(smMediaQuery);
+    smMediaQuery.addEventListener("change", handleScreenSizeChange);
 
-    // Listen for screen size changes
-    smMediaQuery.addEventListener('change', handleScreenSizeChange);
-
-    // Clean up the event listener on component unmount
-    return () => smMediaQuery.removeEventListener('change', handleScreenSizeChange);
-  });
+    return () => smMediaQuery.removeEventListener("change", handleScreenSizeChange);
+  }, [data]);
 
   return (
     <div className="bg-[#34b43ac2] w-full h-20 flex justify-between items-center px-6 shadow-lg rounded-lg">
       <h1 className="flex gap-2 justify-center items-center text-white text-xl sm:text-2xl font-bold montserrat-alternates-bold">
-        <img src="logo/logo.jpg" className="w-14 rounded-full" alt="" />HALAL-BRO
+        <img src="logo/logo.jpg" className="w-14 rounded-full" alt="Logo" />
+        HALAL-BRO
       </h1>
-      <div className="flex items-center gap-6">
-        <div className="wrap-input-17">
-          <div className="search-box">
-            <button className="btn-search">
-              <CiSearch className="text-3xl" />
-            </button>
-            <input
-              type="text"
-              className="input-search"
-              placeholder="Type to Search..."
-            />
-          </div>
-        </div>
-
-        {displayComponent}
-      </div>
-    <>
-    <Drawer
-        placement="right"
-        open={openRight}
-        onClose={closeDrawerRight}
-        className="p-4"
-      >
-        <div className="mb-6 flex items-center justify-between">
-
-          <IconButton
-            variant="text"
-            color="blue-gray"
-            onClick={closeDrawerRight}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
+      <div className="flex items-center gap-6">{displayComponent}</div>
+      <Dialog className="py-10" open={open} handler={handleClose}>
+        <h1 className="flex justify-center items-center new-amsterdam-regular text-4xl heading">
+          Upload Product
+        </h1>
+        <DialogBody>
+          <div className="flex flex-col justify-center items-center gap-y-5">
+            <div className="w-72">
+              <Input
+                type="text"
+                label="Name"
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
               />
-            </svg>
-          </IconButton>
-        </div>
-       
-          
-          {data ? (
-           <>
-            <div className="flex flex-col montserrat-alternates-regular gap-y-4 h-full">
-              <div className="flex gap-3 justify-center items-center text-[green]">
-                <Avatar src="/1.jpg" className="border-green-600 border-2" size="md" />
-                <h1>Md. Econozzaman Econ</h1>
-                
-              </div>
-              <div className="bg-[#cdcecd67] p-5 rounded-lg flex justify-between">
-                  <h1 className="text-[green] cursor-pointer hover:text-gray-300">Dashboard</h1>
-                  <h1 onClick={temp}className="text-[green] cursor-pointer hover:text-gray-300">Logout</h1>
-                </div>
-              <h1 className="text-[green] cursor-pointer hover:text-gray-300">Cart</h1>
-              <h1 className="text-[green] cursor-pointer hover:text-gray-300">Products</h1>
-              <h1 className="text-[green] cursor-pointer hover:text-gray-300">About</h1>
-            
-          </div>
-           </>) : (
-            <>
-            <div className=" flex justify-between px-10">
-            <Button className="bg-green-500">Login</Button>
-              <Button className="text-black bg-white">Signin</Button>
-
-
             </div>
-            </>
-           )}
-
-
-
-      </Drawer>
-      </>
+            <div className="w-72">
+              <Input
+                type="text"
+                label="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+            <div className="w-72">
+              <Input
+                type="number"
+                label="Price"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            </div>
+            <div className="w-72">
+              <Select
+                label="Select Category"
+                value={category}
+                onChange={(value) => setCategory(value)}
+              >
+                <Option value="Pant">Pant</Option>
+                <Option value="Shirt">Shirt</Option>
+                <Option value="T-Shirt">T-Shirt</Option>
+                <Option value="Slipper">Slipper</Option>
+              </Select>
+            </div>
+            <div className="w-72">
+              <Input
+                type="file"
+                label="Photo"
+                accept=".jpg,.png,.jpeg" // Correct file types
+                onChange={(e) => setPhoto(e.target.files[0])}
+              />
+            </div>
+          </div>
+        </DialogBody>
+        <DialogFooter className="flex justify-center">
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleClose} // Close dialog
+            className="mr-1"
+          >
+            <span>Cancel</span>
+          </Button>
+          <Button variant="gradient" color="green" onClick={handleSubmit}>
+            <span>Upload</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
     </div>
   );
 }
