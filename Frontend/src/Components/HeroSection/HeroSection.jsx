@@ -7,6 +7,7 @@ export default function HeroSection() {
       className="w-full min-h-screen bg-cover bg-center flex flex-col"
       style={{ backgroundImage: "url('1.jpg')" }}
     >
+      <Navbar />
       <div className="flex-1 flex justify-center items-center">
         <div className="grid grid-cols-1 md:grid-cols-2 w-full max-w-screen-xl mx-auto">
           <div className="hero-left text-white py-10 flex flex-col justify-center items-center md:items-start">
