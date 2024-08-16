@@ -307,33 +307,6 @@
   }
 }
 
-.image-slider {
-  overflow: hidden; /* Hide overflow */
-  position: relative;
-}
 
-.slider-wrapper {
-  display: flex;
-  width: calc(100% * 2); /* Double the width to ensure the loop effect */
-  animation: slide 10s linear infinite; /* Adjust duration to control speed */
-}
-
-.slider-image {
-  flex: 0 0 auto; /* Prevent shrinking and ensure fixed width */
-  width: 400px; /* Adjust as needed */
-  margin-right: 15px; /* Adjust the gap between images */
-  border-radius: 25px;
-  object-fit: cover; /* Ensures the image covers the entire area and respects border-radius */
-}
-
-
-@keyframes slide {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
 
 
