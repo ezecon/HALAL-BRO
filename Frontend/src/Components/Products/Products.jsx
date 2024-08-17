@@ -35,7 +35,7 @@ export default function Products() {
         }
       });
     }, { threshold: 0.1 });
-
+      
     // Observe each element
     refs.current.forEach((ref) => {
       if (ref) {
