@@ -3,6 +3,7 @@ import Footer from "../../Components/Footer/Footer";
 import Gallery from "../../Components/Gallery/Gallery";
 import HeroSection from "../../Components/HeroSection/HeroSection";
 import Products from "../../Components/Products/Products";
+import Outfit from "../../Components/Outfit/Outfit";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,6 +40,7 @@ export default function Home() {
   return (
     <div>
         <HeroSection/>
+        <Outfit/>
         <Products/>
         <Gallery/>
         <Footer/>

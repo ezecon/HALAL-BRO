@@ -472,3 +472,70 @@
 .scale-up {
   animation: scaleUp 0.5s ease-out;
 }
+
+
+/*8discout*/
+.discount {
+  width: 100%;
+  height: 450px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.img-container {
+  position: relative;
+  width: 10%;
+  height: 100%;
+  transition: all 1s ease;
+}
+
+.img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  filter: blur(2px); /* Initial blur applied */
+  transition: filter 1s ease;
+}
+
+.img-container .text {
+  position: absolute;
+  top: 95%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-family: "New Amsterdam", sans-serif;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.img-container:hover {
+  width: 25%;
+}
+
+.img-container:hover img {
+  filter: none; /* Remove blur on hover */
+}
+
+.img-container:hover .text {
+  opacity: 1;
+}
+
+@media (min-width: 640px) {
+  .img-container:hover {
+    height: 150%;
+  }
+}
+@media (min-width: 746px) {
+  .img-container:hover {
+    height: 110%;
+  }
+}
+@media (min-width: 1024px) {
+  .img-container:hover {
+    height: 150%;
+  }
+}

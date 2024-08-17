@@ -10,7 +10,7 @@ export default function Products() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/api/v2/products');
+        const res = await axios.get('https://halal-bro-server.vercel.app/api/v2/products');
         if (res.status === 200 && Array.isArray(res.data.data)) {
           setData(res.data.data);
           console.log(res.data.data); // Log fetched data

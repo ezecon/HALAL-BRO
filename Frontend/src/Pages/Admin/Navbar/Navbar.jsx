@@ -48,7 +48,7 @@ export default function Navbar() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v2/products",
+        "https://halal-bro-server.vercel.app/api/v2/products",
         formData,
         {
           headers: {
