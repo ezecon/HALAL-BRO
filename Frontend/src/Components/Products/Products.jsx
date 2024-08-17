@@ -63,7 +63,7 @@ export default function Products({isHome}) {
         PRODUCTS
       </h1>
 
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
       {
           !isHome && <>
           <div className="w-72">
