@@ -2,10 +2,8 @@ import { Button, Option, Select } from "@material-tailwind/react";
 import ProductCard from "../ProductCard/ProductCard";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import ComNavbar from "../Layoout/CommonNavbar/ComNavbar";
-import { Link } from "react-router-dom";
 
-export default function Products({isHome}) {
+export default function AdminProducts() {
   const [data, setData] = useState([]); // Initialize as an empty array
   const refs = useRef([]);
 
@@ -56,16 +54,13 @@ export default function Products({isHome}) {
   }, [data]); // Dependency on data to apply observer after data is fetched
 
   return (
-   <div>
-   {!isHome && <ComNavbar/> } 
-     <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col items-center w-full">
       <h1 className="heading new-amsterdam-regular text-4xl sm:text-5xl md:text-6xl text-center m-10">
         PRODUCTS
       </h1>
 
       <div className="container mx-auto px-4">
-      {
-          !isHome && <>
+  <>
           <div className="w-72">
               <Select
                 label="Select Category"
@@ -78,24 +73,10 @@ export default function Products({isHome}) {
               </Select>
             </div>
             </>
-      }
+      
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-        {
-          isHome && <>
-          {data.slice(0,10).map((item, index) => (
-          <div
-            key={index}
-            ref={(el) => (refs.current[index] = el)}
-            className=" p-4 transition-transform duration-500 flex"
-            style={{ animationDelay: `${index * 100}ms` }}
-          >
-            <ProductCard key={data._id} product={item} className="hero-loop" />
-          </div>
-          
-        ))}</>
-        }
          {
-          !isHome && <>
+ <>
          
           {data.map((item, index) => (
           <div
@@ -111,15 +92,10 @@ export default function Products({isHome}) {
 
       </div>
       </div>
-      {
-        isHome && <>
-        <div className="flex justify-center mt-5">
-        <Link to="/products"><Button>See More</Button></Link>
-      </div></>
-      }
 
-      
+      <div className="flex justify-center mt-5">
+        <Button>See More</Button>
+      </div>
     </div>
-   </div>
   );
 }

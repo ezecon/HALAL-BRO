@@ -41,7 +41,7 @@ export default function Home() {
     <div>
         <HeroSection/>
         <Outfit/>
-        <Products/>
+        <Products isHome/>
         <Gallery/>
         <Footer/>
     </div>

@@ -2,9 +2,8 @@ import { Avatar,  Button,  Drawer, IconButton, Menu, MenuHandler, MenuItem, Menu
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { CgDetailsMore } from "react-icons/cg";
-import { Link } from "react-router-dom";
 
-export default function Navbar() {
+export default function ComNavbar() {
   const [displayComponent, setDisplayComponent] = useState(null); // State to hold the rendered component
   const [data, setData] = useState(true)
   const [openRight, setOpenRight] = useState(false)
@@ -23,7 +22,7 @@ const temp =()=>{
         setDisplayComponent(
           <>
             <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Cart</h1>
-            <Link to="/products"><h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Products</h1></Link>
+            <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Products</h1>
             <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">About</h1>
            {data ? (
            <>
@@ -66,7 +65,7 @@ const temp =()=>{
   });
 
   return (
-    <div className="bg-[#fdfdfd33] w-full h-20 flex justify-between items-center px-6">
+    <div className="bg-[#68d86dd3] w-full h-20 flex justify-between items-center px-6">
       <h1 className="flex gap-2 justify-center items-center text-white text-xl sm:text-2xl font-bold montserrat-alternates-bold">
         <img src="logo/logo.jpg" className="w-14 rounded-full" alt="" />HALAL-BRO
       </h1>
@@ -131,7 +130,7 @@ const temp =()=>{
                   <h1 onClick={temp}className="text-[green] cursor-pointer hover:text-gray-300">Logout</h1>
                 </div>
               <h1 className="text-[green] cursor-pointer hover:text-gray-300">Cart</h1>
-              <Link to="/products"><h1 className="text-[green] cursor-pointer hover:text-gray-300">Products</h1></Link>
+              <h1 className="text-[green] cursor-pointer hover:text-gray-300">Products</h1>
               <h1 className="text-[green] cursor-pointer hover:text-gray-300">About</h1>
             
           </div>
