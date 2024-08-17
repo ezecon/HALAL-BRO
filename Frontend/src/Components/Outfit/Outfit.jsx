@@ -32,10 +32,6 @@ export default function Outfit() {
         <img src="/Discount/6.jpg" alt="Discount 6" />
         <div className="text">Discount 6</div>
       </div>
-      <div className="img-container">
-        <img src="/Discount/7.jpg" alt="Discount 7" />
-        <div className="text">Discount 7</div>
-      </div>
     </div>
 
 

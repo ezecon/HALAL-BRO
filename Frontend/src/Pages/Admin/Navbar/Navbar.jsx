@@ -76,7 +76,7 @@ export default function Navbar() {
     const smMediaQuery = window.matchMedia("(max-width: 640px)");
 
     const handleScreenSizeChange = (e) => {
-      if (!e.matches) {
+      if (e.matches) {
         setDisplayComponent(
           <Menu>
             <MenuHandler>

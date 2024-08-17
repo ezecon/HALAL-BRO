@@ -59,18 +59,20 @@ export default function Products() {
         PRODUCTS
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 gap-y-10 w-full px-4 sm:px-6 md:px-10 py-5 lg:px-24">
-        {data.map((item, index) => (
+      <div className="container mx-auto px-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        {data.slice(0,10).map((item, index) => (
           <div
             key={index}
             ref={(el) => (refs.current[index] = el)}
-            className=" p-4 transition-transform duration-500"
+            className=" p-4 transition-transform duration-500 flex"
             style={{ animationDelay: `${index * 100}ms` }}
           >
-            <ProductCard key={data._id} product={item} />
+            <ProductCard key={data._id} product={item} className="hero-loop" />
           </div>
         ))}
 
+      </div>
       </div>
 
       <div className="flex justify-center mt-5">

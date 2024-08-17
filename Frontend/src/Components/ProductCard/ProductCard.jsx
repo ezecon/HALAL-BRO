@@ -1,20 +1,27 @@
+import { FaOpencart } from "react-icons/fa";
+export default function ProductCard({ product }) {
+  const cardClasses = "p-4 rounded-lg shadow-lg bg- transform hover:scale-105 transition-transform duration-300";
+  const {_id, name, price, image} = product;
 
-
-export default function ProductCard({product}) {
-  const {_id, name, price, image} = product
   return (
-    <div>
-        <div className="w-[320px] h-[450px] bg-[rgba(112,96,96,0.2)] shadow-lg border border-[rgba(255,255,255,0.25)] border-t-[rgba(255,255,255,0.5)] border-l-[rgba(255,255,255,0.5)] rounded-[25px] backdrop-blur-sm p-10 flex flex-col justify-between items-center">
-          <h1 className="tracking-widest text-white new-amsterdam-regular text-3xl">{name}</h1>
-          <img src={image} alt="Slipper" className="w-full hero-loop rounded" />
-          <p className="tracking-widest text-white new-amsterdam-regular text-2xl">{price}$</p>
-          <a
+    <div className="flex flex-col justify-center items-center p-4 hero-loop">
+      <div className={cardClasses}>
+        <img 
+          src={image} 
+          alt={`Image of ${name}`} 
+          className="w-full h-40 object-cover rounded-md mb-4 transform transition-transform duration-1000 hover:scale-110"
+        />
+        <h3 className="new-amsterdam-regular text-xl font-semibold mt-2 hover:text-[goldenrod]">{name}</h3>
+        <p className="text-gray-600">${price}</p>
+        <div className="flex justify-center">
+        <a
           href="#"
-          className="absolute bottom-[-20px] bg-white inline-block no-underline py-3 px-6 rounded-full shadow-md font-medium text-[#1e6b7b] transition-all duration-200 hover:tracking-widest"
+          className="bg-[#e4e3e3] text-white inline-block py-3 px-6 rounded-full shadow-lg font-semibold transition-transform duration-300 hover:bg-[goldenrod] hover:scale-105"
         >
-          Add to Cart
+          <FaOpencart className="text-black"/>
         </a>
         </div>
+      </div>
     </div>
-  )
+  );
 }
