@@ -610,3 +610,9 @@ label:last-child span {
   background-attachment: fixed;
 }
 
+.profile-left-1{
+  background: url(/login.jpg);
+  background-size: cover;
+  object-fit: cover;
+}
+

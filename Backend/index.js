@@ -1,31 +1,34 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const mongoose = require('mongoose')
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const mongoose = require('mongoose');
 
-const app = express()
-const port = 3000
+const app = express();
+const port = 3000;
 
-//middlewares
-app.use(bodyParser.json())
-app.use(cors())
+// Middlewares
+app.use(express.json({ extended: false }));
+app.use(bodyParser.json());
+app.use(cors());
 
-//connect to mongodb
-mongoose.connect('mongodb+srv://mdeconozzama:UFyGpfTmxCEVKHrU@cluster0.7fkqi.mongodb.net/database?retryWrites=true&w=majority&appName=Cluster0',{
+// Connect to MongoDB
+mongoose.connect('mongodb+srv://mdeconozzama:UFyGpfTmxCEVKHrU@cluster0.7fkqi.mongodb.net/database?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
-  useUnifiedTopology:true
+  useUnifiedTopology: true,
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => {
+  console.error(err.message);
+  process.exit(1);
 });
 
-const db = mongoose.connection
-db.on('error',console.error.bind(console, 'connection error'));
-db.once('open',()=>{
-  console.log('Connected to mongodb');
-})
+// Routes
+const product = require('./routes/products.js');
+app.use('/api/v2/products', product);
 
-const product = require('./routes/products.js')
-app.use('/api/v2/products',product);
+const authRoutes = require('./routes/auth');
+app.use('/api/v2/auth', authRoutes);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
-//UFyGpfTmxCEVKHrU
+  console.log(`Server listening on port ${port}`);
+});

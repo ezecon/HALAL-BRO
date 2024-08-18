@@ -6,6 +6,8 @@ import AdminProducts from "../../Pages/Admin/Products/Products";
 import Cart from "../Cart/Cart";
 import SingleProduct from "../SingleProduct.jsx/SingleProduct";
 import Profile from "../Profile/Profile";
+import Login from "../Login";
+import Register from "../Register";
 
 const router = createBrowserRouter([
     {
@@ -33,6 +35,14 @@ const router = createBrowserRouter([
         element: <Cart/>,
 
     },
+    {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
     {
         path: "/admin",
         element: <HomeAdmin/>,

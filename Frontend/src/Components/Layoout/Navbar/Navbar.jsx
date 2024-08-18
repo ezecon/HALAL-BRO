@@ -40,8 +40,8 @@ const temp =()=>{
            </>) : (
             <>
             <div className="flex gap-2">
-              <Button className="bg-green-500">Login</Button>
-              <Button className="text-black bg-white">Signin</Button>
+             <Link to="/login"> <Button className="bg-green-500">Login</Button></Link>
+              <Link to="/register"><Button className="text-black bg-white">Signin</Button></Link>
 
             </div>
             </>
@@ -141,8 +141,8 @@ const temp =()=>{
            </>) : (
             <>
             <div className=" flex justify-between px-10">
-            <Button className="bg-green-500">Login</Button>
-              <Button className="text-black bg-white">Signin</Button>
+            <Link to="/login"> <Button className="bg-green-500">Login</Button></Link>
+            <Link to="/register"><Button className="text-black bg-white">Signin</Button></Link>
 
 
             </div>
