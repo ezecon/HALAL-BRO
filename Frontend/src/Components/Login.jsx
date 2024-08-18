@@ -17,7 +17,7 @@ const Login = () => {
             const idToken = await result.user.getIdToken();
 
             // Send token to your backend
-            const response = await axios.post('http://localhost:3000/api/v2/auth/google-signin', {
+            const response = await axios.post('https://halal-bro-server.vercel.app/api/v2/auth/google-signin', {
                 idToken,
             });
 
@@ -38,7 +38,7 @@ const Login = () => {
     const handleEmailPasswordLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/api/v2/auth/login', {
+            const response = await axios.post('https://halal-bro-server.vercel.app/api/v2/auth/login', {
                 email,
                 password,
             });
