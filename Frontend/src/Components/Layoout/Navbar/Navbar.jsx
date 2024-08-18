@@ -22,7 +22,7 @@ const temp =()=>{
         // Small screen
         setDisplayComponent(
           <>
-            <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Cart</h1>
+            <Link to="/carts"><h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Cart</h1></Link>
             <Link to="/products"><h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Products</h1></Link>
             <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">About</h1>
            {data ? (
@@ -32,7 +32,7 @@ const temp =()=>{
                 <Avatar src="/1.jpg" className=" border-green-600 border-2 cursor-pointer" size="md" />
             </MenuHandler>
             <MenuList>
-              <MenuItem>Profile</MenuItem>
+              <Link to="/profile"><MenuItem>Profile</MenuItem></Link>
               <MenuItem>Dashboard</MenuItem>
               <MenuItem onClick={temp}>Logout</MenuItem>
             </MenuList>
@@ -67,9 +67,12 @@ const temp =()=>{
 
   return (
     <div className="bg-[#fdfdfd33] w-full h-20 flex justify-between items-center px-6">
-      <h1 className="flex gap-2 justify-center items-center text-white text-xl sm:text-2xl font-bold montserrat-alternates-bold">
-        <img src="logo/logo.jpg" className="w-14 rounded-full" alt="" />HALAL-BRO
+      <Link to="/">
+     <h1 className="flex gap-2 justify-center items-center text-white text-xl sm:text-2xl font-bold montserrat-alternates-bold">
+        <img src="logo/logo.jpg" className="w-14 rounded-full" alt="Logo" />
+        HALAL-BRO
       </h1>
+     </Link>
       <div className="flex items-center gap-6">
         <div className="wrap-input-17">
           <div className="search-box">
@@ -122,7 +125,7 @@ const temp =()=>{
            <>
             <div className="flex flex-col montserrat-alternates-regular gap-y-4 h-full">
               <div className="flex gap-3 justify-center items-center text-[green]">
-                <Avatar src="/1.jpg" className="border-green-600 border-2" size="md" />
+              <Link to="/profile">  <Avatar src="/1.jpg" className="border-green-600 border-2" size="md" /></Link>
                 <h1>Md. Econozzaman Econ</h1>
                 
               </div>
@@ -130,7 +133,7 @@ const temp =()=>{
                   <h1 className="text-[green] cursor-pointer hover:text-gray-300">Dashboard</h1>
                   <h1 onClick={temp}className="text-[green] cursor-pointer hover:text-gray-300">Logout</h1>
                 </div>
-              <h1 className="text-[green] cursor-pointer hover:text-gray-300">Cart</h1>
+              <Link to="/carts"><h1 className="text-[green] cursor-pointer hover:text-gray-300">Cart</h1></Link>
               <Link to="/products"><h1 className="text-[green] cursor-pointer hover:text-gray-300">Products</h1></Link>
               <h1 className="text-[green] cursor-pointer hover:text-gray-300">About</h1>
             

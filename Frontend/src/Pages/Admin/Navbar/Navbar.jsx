@@ -15,6 +15,7 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from 'react-hot-toast'; // Import toast
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [displayComponent, setDisplayComponent] = useState(null);
@@ -142,11 +143,13 @@ export default function Navbar() {
   }, [data]);
 
   return (
-    <div className="bg-[#34b43ac2] w-full h-20 flex justify-between items-center px-6 shadow-lg rounded-lg">
-      <h1 className="flex gap-2 justify-center items-center text-white text-xl sm:text-2xl font-bold montserrat-alternates-bold">
-        <img src="logo/logo.jpg" className="w-14 rounded-full" alt="Logo" />
+    <div className="bg-gradient-to-r from-green-500 to-[#c9de71] w-full h-20 flex justify-between items-center px-6 shadow-lg rounded-lg">
+     <Link to="/">
+     <h1 className="flex gap-2 justify-center items-center text-white text-xl sm:text-2xl font-bold montserrat-alternates-bold">
+        <img src="/logo/logo.jpg" className="w-14 rounded-full" alt="Logo" />
         HALAL-BRO
       </h1>
+     </Link>
       <div className="flex items-center gap-6">{displayComponent}</div>
       <Dialog className="py-10" open={open} handler={handleClose}>
         <h1 className="flex justify-center items-center new-amsterdam-regular text-4xl heading">
@@ -163,13 +166,17 @@ export default function Navbar() {
               />
             </div>
             <div className="w-72">
-              <Input
-                type="text"
-                label="Description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
+            <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+              Description
+            </label>
+            <textarea
+              id="description"
+              className="mt-1 block w-full h-32 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+
             <div className="w-72">
               <Input
                 type="number"

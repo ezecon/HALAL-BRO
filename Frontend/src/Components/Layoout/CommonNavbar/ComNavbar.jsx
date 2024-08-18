@@ -2,6 +2,7 @@ import { Avatar,  Button,  Drawer, IconButton, Menu, MenuHandler, MenuItem, Menu
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { CgDetailsMore } from "react-icons/cg";
+import { Link } from "react-router-dom";
 
 export default function ComNavbar() {
   const [displayComponent, setDisplayComponent] = useState(null); // State to hold the rendered component
@@ -65,10 +66,13 @@ const temp =()=>{
   });
 
   return (
-    <div className="bg-[#68d86dd3] w-full h-20 flex justify-between items-center px-6">
-      <h1 className="flex gap-2 justify-center items-center text-white text-xl sm:text-2xl font-bold montserrat-alternates-bold">
-        <img src="logo/logo.jpg" className="w-14 rounded-full" alt="" />HALAL-BRO
+    <div className="bg-gradient-to-r from-green-500 to-[#c9de71] w-full h-20 flex justify-between items-center px-6">
+      <Link to="/">
+     <h1 className="flex gap-2 justify-center items-center text-white text-xl sm:text-2xl font-bold montserrat-alternates-bold">
+        <img src="/logo/logo.jpg" className="w-14 rounded-full" alt="Logo" />
+        HALAL-BRO
       </h1>
+     </Link>
       <div className="flex items-center gap-6">
         <div className="wrap-input-17">
           <div className="search-box">

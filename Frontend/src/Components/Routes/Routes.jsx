@@ -3,7 +3,11 @@ import Home from "../../Pages/Customer/Home";
 import HomeAdmin from "../../Pages/Admin/Home";
 import Products from "../Products/Products";
 import AdminProducts from "../../Pages/Admin/Products/Products";
-import Login from './../Login/Login';
+
+import Cart from "../Cart/Cart";
+import SingleProduct from "../SingleProduct.jsx/SingleProduct";
+import Profile from "../Profile/Profile";
+
 
 const router = createBrowserRouter([
     {
@@ -12,15 +16,16 @@ const router = createBrowserRouter([
 
     },
     {
+        path: "/check-product/:id",
+        element: <SingleProduct/>,
+
+    },
+    {
         path: "/products",
         element: <Products/>,
 
     },
-    {
-        path: "/login",
-        element: <Login/>,
 
-    },
     {
         path: "/admin",
         element: <HomeAdmin/>,
@@ -28,7 +33,12 @@ const router = createBrowserRouter([
             {
                 path:'',
                 element:<AdminProducts/>
-            }
+            },
+            {
+                path:'profile',
+                element:<Profile/>
+            },
+
         ]
     },
 ])
