@@ -601,3 +601,12 @@ label:first-child span {
 label:last-child span {
   border-radius: 0 .375em .375em 0;
 }
+
+.profile-left{
+  width: 100%;
+  min-height: 100vh;
+  background: url(/1.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+}
+

@@ -32,7 +32,7 @@ const temp =()=>{
                 <Avatar src="/1.jpg" className=" border-green-600 border-2 cursor-pointer" size="md" />
             </MenuHandler>
             <MenuList>
-              <MenuItem>Profile</MenuItem>
+              <Link to="/profile"><MenuItem>Profile</MenuItem></Link>
               <MenuItem>Dashboard</MenuItem>
               <MenuItem onClick={temp}>Logout</MenuItem>
             </MenuList>
@@ -125,7 +125,7 @@ const temp =()=>{
            <>
             <div className="flex flex-col montserrat-alternates-regular gap-y-4 h-full">
               <div className="flex gap-3 justify-center items-center text-[green]">
-                <Avatar src="/1.jpg" className="border-green-600 border-2" size="md" />
+              <Link to="/profile">  <Avatar src="/1.jpg" className="border-green-600 border-2" size="md" /></Link>
                 <h1>Md. Econozzaman Econ</h1>
                 
               </div>

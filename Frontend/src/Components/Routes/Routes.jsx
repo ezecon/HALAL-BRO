@@ -5,6 +5,7 @@ import Products from "../Products/Products";
 import AdminProducts from "../../Pages/Admin/Products/Products";
 import Cart from "../Cart/Cart";
 import SingleProduct from "../SingleProduct.jsx/SingleProduct";
+import Profile from "../Profile/Profile";
 
 const router = createBrowserRouter([
     {
@@ -23,6 +24,11 @@ const router = createBrowserRouter([
 
     },
     {
+        path: "/profile",
+        element: <Profile/>,
+
+    },
+    {
         path: "/carts",
         element: <Cart/>,
 
@@ -34,7 +40,12 @@ const router = createBrowserRouter([
             {
                 path:'',
                 element:<AdminProducts/>
-            }
+            },
+            {
+                path:'profile',
+                element:<Profile/>
+            },
+
         ]
     },
 ])

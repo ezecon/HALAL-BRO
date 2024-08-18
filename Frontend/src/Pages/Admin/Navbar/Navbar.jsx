@@ -146,7 +146,7 @@ export default function Navbar() {
     <div className="bg-gradient-to-r from-green-500 to-[#c9de71] w-full h-20 flex justify-between items-center px-6 shadow-lg rounded-lg">
      <Link to="/">
      <h1 className="flex gap-2 justify-center items-center text-white text-xl sm:text-2xl font-bold montserrat-alternates-bold">
-        <img src="logo/logo.jpg" className="w-14 rounded-full" alt="Logo" />
+        <img src="/logo/logo.jpg" className="w-14 rounded-full" alt="Logo" />
         HALAL-BRO
       </h1>
      </Link>
