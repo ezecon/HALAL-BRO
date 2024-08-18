@@ -4,7 +4,7 @@ export default function ProductCard({ product }) {
   const {_id, name, price, image} = product;
 
   return (
-    <div className="flex flex-col justify-center items-center p-4 hero-loop">
+    <div className="flex flex-col justify-center items-center hero-loop">
       <div className={cardClasses}>
         <img 
           src={image} 
@@ -12,7 +12,7 @@ export default function ProductCard({ product }) {
           className="w-full h-40 object-cover rounded-md mb-4 transform transition-transform duration-1000 hover:scale-110"
         />
         <h3 className="new-amsterdam-regular text-xl font-semibold mt-2 hover:text-[goldenrod]">{name}</h3>
-        <p className="text-gray-600">${price}</p>
+        <p className="new-amsterdam-regular text-lg text-gray-600">${price}</p>
         <div className="flex justify-center">
         <a
           href="#"
