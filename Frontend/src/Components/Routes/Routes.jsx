@@ -4,7 +4,7 @@ import HomeAdmin from "../../Pages/Admin/Home";
 import Products from "../Products/Products";
 import AdminProducts from "../../Pages/Admin/Products/Products";
 
-import Cart from "../Cart/Cart";
+//import Cart from "../Cart/Cart";
 import SingleProduct from "../SingleProduct.jsx/SingleProduct";
 import Profile from "../Profile/Profile";
 import Login from "../Login";
@@ -22,11 +22,7 @@ const router = createBrowserRouter([
         element: <Profile/>,
 
     },
-    {
-        path: "/carts",
-        element: <Cart/>,
-
-    },
+  
     {
         path: "/check-product/:id",
         element: <SingleProduct/>,

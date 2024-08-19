@@ -143,5 +143,16 @@ router.get('/user-info', (req, res) => {
     res.json({ user: decoded.user });
   });
 });
+// In your server-side routes file (e.g., routes/auth.js)
+router.post('/logout', (req, res) => {
+  try {
+      // Clear the token cookie
+      res.clearCookie('token');
+      res.json({ msg: 'Logout successful' });
+  } catch (error) {
+      res.status(500).json({ msg: 'Server error' });
+  }
+});
+
 
 module.exports = router;

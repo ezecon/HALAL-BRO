@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { CgDetailsMore } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
-import { useToken } from "../../Hook/useToken";
 import axios from "axios";
 
 export default function Navbar() {
@@ -12,7 +11,7 @@ export default function Navbar() {
   const [openRight, setOpenRight] = useState(false)
   const openDrawerRight = () => setOpenRight(true);
   const closeDrawerRight = () => setOpenRight(false);
-  const { token, removeToken } = useToken();
+
   const navigate = useNavigate();
   const [userID, setUserID] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
@@ -22,18 +21,29 @@ export default function Navbar() {
   useEffect(() => {
     const fetchUserInfo = async () => {
         try {
+            // Attempt to fetch user info from backend
             const response = await axios.get('http://localhost:3000/api/v2/auth/user-info', { withCredentials: true });
             setUserInfo(response.data.user);
         } catch (error) {
-            setError('Failed to fetch user info');
+            // If there's an error (e.g., no token or invalid token), navigate to login
+            navigate('/login');
         } finally {
             setLoading(false);
         }
     };
 
     fetchUserInfo();
-}, []);
+}, [navigate]);
 
+
+const handleLogout = async () => {
+  try {
+      await axios.post('http://localhost:3000/api/v2/auth/logout', {}, { withCredentials: true });
+      navigate('/login');
+  } catch (error) {
+      console.error('Logout failed:', error);
+  }
+};
 
 const temp =()=>{
   setData(false)
@@ -59,7 +69,7 @@ const temp =()=>{
             <MenuList>
               <Link to="/profile"><MenuItem>Profile</MenuItem></Link>
               <MenuItem>Dashboard</MenuItem>
-              <MenuItem onClick={temp}>Logout</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </MenuList>
           </Menu>
            </>) : (
@@ -151,12 +161,12 @@ const temp =()=>{
             <div className="flex flex-col montserrat-alternates-regular gap-y-4 h-full">
               <div className="flex gap-3 justify-center items-center text-[green]">
               <Link to="/profile">  <Avatar src="/1.jpg" className="border-green-600 border-2" size="md" /></Link>
-                <h1>Md. Econozzaman Econ</h1>
+                <h1>{userInfo.email}</h1>
                 
               </div>
               <div className="bg-[#cdcecd67] p-5 rounded-lg flex justify-between">
                   <h1 className="text-[green] cursor-pointer hover:text-gray-300">Dashboard</h1>
-                  <h1 onClick={temp}className="text-[green] cursor-pointer hover:text-gray-300">Logout</h1>
+                  <h1 onClick={handleLogout}className="text-[green] cursor-pointer hover:text-gray-300">Logout</h1>
                 </div>
               <Link to="/carts"><h1 className="text-[green] cursor-pointer hover:text-gray-300">Cart</h1></Link>
               <Link to="/products"><h1 className="text-[green] cursor-pointer hover:text-gray-300">Products</h1></Link>
