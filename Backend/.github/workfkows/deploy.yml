@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Save secret key to file
-        run: echo "${{ secrets.key }}" > ./Backend/Config/key.json
+        run: echo "${{ secrets.key }}" > ./Config/key.json
 
       - name: Authenticate with Google Cloud
         env:
