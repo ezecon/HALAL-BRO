@@ -7,7 +7,7 @@ import axios from "axios";
 
 export default function Navbar() {
   const [displayComponent, setDisplayComponent] = useState(null); // State to hold the rendered component
-  const [data, setData] = useState(true)
+
   const [openRight, setOpenRight] = useState(false)
   const openDrawerRight = () => setOpenRight(true);
   const closeDrawerRight = () => setOpenRight(false);
@@ -16,24 +16,43 @@ export default function Navbar() {
   const [userID, setUserID] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-        try {
-            // Attempt to fetch user info from backend
-            const response = await axios.get('http://localhost:3000/api/v2/auth/user-info', { withCredentials: true });
-            setUserInfo(response.data.user);
-        } catch (error) {
-            // If there's an error (e.g., no token or invalid token), navigate to login
-            
-        } finally {
-            setLoading(false);
-        }
+    const fetchUser = async () => {
+      try {
+        // Attempt to fetch user info from backend
+        const response = await axios.get('http://localhost:3000/api/v2/auth/user-info', { withCredentials: true });
+        setUserID(response.data.user);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     };
-
+  
+    fetchUser();
+  }, []); // Empty dependency array to run only on component mount
+  
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      if (userID && userID.id) { // Ensure userID and userID.id are not null
+        try {
+          const response = await axios.get(`http://localhost:3000/api/v2/users/${userID.id}`);
+          if (response.status === 200) {
+            setUserInfo(response.data.item);
+            console.log(response.data.item); // Make sure to log the response data
+          } else {
+            console.log(response.data);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    };
+  
     fetchUserInfo();
-}, [navigate]);
+  }, [userID]); // Dependency array includes userID
+  
 
 
 const handleLogout = async () => {
@@ -44,6 +63,11 @@ const handleLogout = async () => {
       console.error('Logout failed:', error);
   }
 };
+if(loading){
+  <div className="flex flex-col justify-center items-center h-screen bg-black gap-y-4">
+       <span className="loader"></span>
+      </div>
+}
 
 
   useEffect(() => {
@@ -58,7 +82,7 @@ const handleLogout = async () => {
             <Link to="/carts"><h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Cart</h1></Link>
             <Link to="/products"><h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Products</h1></Link>
             <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">About</h1>
-           {userInfo ? (
+           {userID ? (
            <>
             <Menu>
             <MenuHandler>
@@ -154,12 +178,13 @@ const handleLogout = async () => {
         </div>
        
           
-          {userInfo ? (
+          {userID ? (
            <>
             <div className="flex flex-col montserrat-alternates-regular gap-y-4 h-full">
-              <div className="flex gap-3 justify-center items-center text-[green]">
+              <div className="flex flex-col gap-3 justify-center items-center text-[green]">
               <Link to="/profile">  <Avatar src="/1.jpg" className="border-green-600 border-2" size="md" /></Link>
-                <h1>{userInfo.email}</h1>
+                <h1 className="montserrat-alternates-bold">{userInfo && userInfo.displayName}</h1>
+                <h1>{!userInfo && <p>Loading..</p>}</h1>
                 
               </div>
               <div className="bg-[#cdcecd67] p-5 rounded-lg flex justify-between">
