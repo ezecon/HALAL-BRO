@@ -10,7 +10,11 @@ const port = 3000;
 // Middlewares
 app.use(express.json({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors());
+// Configure CORS
+app.use(cors({
+  origin: 'http://localhost:5173', // Replace with the origin of your frontend
+  credentials: true // Allow credentials to be sent
+}));
 app.use(cookieParser())
 
 // Connect to MongoDB
