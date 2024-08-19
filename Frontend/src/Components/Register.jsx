@@ -26,12 +26,12 @@ const Register = () => {
             idToken,
         });
         
-        
+
         // Handle successful login
         toast.success('Login successful');
         const { token, uid } = response.data;
         console.log("JWT Token:", token);
-        localStorage.setItem('jwtToken', token);
+        localStorage.setItem('token', token);
         localStorage.setItem('googleUid', uid);
         navigate("/");
   
@@ -46,7 +46,7 @@ const Register = () => {
     try {
       await registerUser(email, password, displayName);
       toast.success("Registered successfully!");
-      navigate("/");
+      navigate("/login");
     } catch (err) {
       toast.error(err.msg || "Failed to register");
     }

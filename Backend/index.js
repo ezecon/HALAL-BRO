@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = 3000;
@@ -10,6 +11,7 @@ const port = 3000;
 app.use(express.json({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(cookieParser())
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://mdeconozzama:UFyGpfTmxCEVKHrU@cluster0.7fkqi.mongodb.net/database?retryWrites=true&w=majority&appName=Cluster0', {
@@ -19,7 +21,7 @@ mongoose.connect('mongodb+srv://mdeconozzama:UFyGpfTmxCEVKHrU@cluster0.7fkqi.mon
 .then(() => console.log('MongoDB connected'))
 .catch(err => {
   console.error(err.message);
-  process.exit(1);
+  process.exit(1);   
 });
 
 // Routes
@@ -28,6 +30,9 @@ app.use('/api/v2/products', product);
 
 const authRoutes = require('./routes/auth');
 app.use('/api/v2/auth', authRoutes);
+
+const user = require('./routes/User.js');
+app.use('/api/v2/users', user);
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);

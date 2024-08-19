@@ -2,7 +2,9 @@ import { Avatar,  Button,  Drawer, IconButton, Menu, MenuHandler, MenuItem, Menu
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { CgDetailsMore } from "react-icons/cg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useToken } from "../../Hook/useToken";
+import axios from "axios";
 
 export default function Navbar() {
   const [displayComponent, setDisplayComponent] = useState(null); // State to hold the rendered component
@@ -10,6 +12,38 @@ export default function Navbar() {
   const [openRight, setOpenRight] = useState(false)
   const openDrawerRight = () => setOpenRight(true);
   const closeDrawerRight = () => setOpenRight(false);
+  const { token, removeToken } = useToken();
+  const navigate = useNavigate();
+  const [userID, setUserID] = useState(null);
+
+  useEffect(() => {
+    console.log(token)
+    const verifyToken = async () => {
+      try {
+        
+        const response = await axios.post('http://localhost:3000/api/v2/auth/verify-token', { token });
+
+        if (response.status === 200 && response.data.valid) {
+          setUserID(response.data.decoded.id);
+          console.log(response.data.decoded.id)
+
+        } else {
+          console.log("Token verification failed:", response.data);
+        
+        }
+      } catch (error) {
+        console.error('Error verifying token:', error);
+       
+      }
+    };
+
+    if(token){
+      verifyToken();
+    }
+  }, [token, navigate, removeToken]);
+
+
+
 const temp =()=>{
   setData(false)
 }
