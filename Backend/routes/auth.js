@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const admin = require('firebase-admin'); // Ensure Firebase Admin SDK is properly initialized
-const User = require('../models/User'); // Adjust the path to your User model
+const User = require('../models/user'); // Adjust the path to your User model
 const router = express.Router();
 
 const secretKey = 'MeghEcon'; // Make sure this matches your JWT secret

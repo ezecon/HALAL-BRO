@@ -15,33 +15,24 @@ export default function Navbar() {
   const { token, removeToken } = useToken();
   const navigate = useNavigate();
   const [userID, setUserID] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    //console.log(token)
-    const verifyToken = async () => {
-      try {
-        
-        const response = await axios.post('http://localhost:3000/api/v2/auth/verify-token', { token });
-
-        if (response.status === 200 && response.data.valid) {
-          setUserID(response.data.decoded.id);
-          console.log(response.data.decoded.id)
-
-        } else {
-          console.log("Token verification failed:", response.data);
-        
+    const fetchUserInfo = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/api/v2/auth/user-info', { withCredentials: true });
+            setUserInfo(response.data.user);
+        } catch (error) {
+            setError('Failed to fetch user info');
+        } finally {
+            setLoading(false);
         }
-      } catch (error) {
-        console.error('Error verifying token:', error);
-       
-      }
     };
 
-    if(token){
-      verifyToken();
-    }
-  }, [token, navigate, removeToken]);
-
+    fetchUserInfo();
+}, []);
 
 
 const temp =()=>{
