@@ -17,7 +17,7 @@ export default function Navbar() {
   const [userID, setUserID] = useState(null);
 
   useEffect(() => {
-    console.log(token)
+    //console.log(token)
     const verifyToken = async () => {
       try {
         

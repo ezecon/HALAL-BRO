@@ -1,37 +1,50 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const admin = require('../Config/firebase');
-const User = require('../models/user');
+const admin = require('firebase-admin'); // Ensure Firebase Admin SDK is properly initialized
+const User = require('../models/User'); // Adjust the path to your User model
 const router = express.Router();
-const secretKey = "MeghEcon"; // Ensure this key is consistent
 
-// Register with Email/Password
+const secretKey = 'MeghEcon'; // Make sure this matches your JWT secret
+
+// Register a new user
 router.post('/register', async (req, res) => {
-  const { email, password, displayName } = req.body;
+  const { email, password } = req.body;
 
   try {
-    // Register the user with Firebase
-    const userRecord = await admin.auth().createUser({
-      email,
-      password,
-      displayName,
-    });
+    // Check if the user already exists
+    let user = await User.findOne({ email });
+    if (user) {
+      return res.status(400).json({ msg: 'User already exists' });
+    }
 
-    // Hash the password and save the user in MongoDB
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({
-      uid: userRecord.uid,
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    // Create a new user
+    user = new User({
       email,
-      displayName,
       password: hashedPassword,
     });
 
     await user.save();
 
-    res.status(201).send('User registered successfully');
+    // Generate a JWT token with id and email
+    const payload = {
+      user: {
+        id: user._id,
+        email: user.email, // Add email to the payload
+      },
+    };
+
+    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
+
+    // Set the token in an HTTP-only cookie
+    res.cookie('token', token, { httpOnly: true, maxAge: 3600000 });
+
+    res.json({ msg: 'Registration successful' });
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(500).send('Server error');
   }
 });
 
@@ -114,20 +127,21 @@ router.post('/google-signin', async (req, res) => {
   }
 });
 
-// Route to verify token and get user info
-router.post('/verify-token', (req, res) => {
-  const { token } = req.cookies; // Get token from cookies
+// Route to retrieve user info
+router.get('/user-info', (req, res) => {
+  const token = req.cookies.token;
 
   if (!token) {
     return res.status(401).json({ msg: 'No token provided' });
   }
 
-  try {
-    const decoded = jwt.verify(token, secretKey);
+  jwt.verify(token, secretKey, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ msg: 'Token is not valid' });
+    }
+
     res.json({ user: decoded.user });
-  } catch (err) {
-    res.status(400).json({ msg: 'Token is not valid' });
-  }
+  });
 });
 
 module.exports = router;
