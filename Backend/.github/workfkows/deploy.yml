@@ -1,0 +1,34 @@
+name: Deploy to Google Cloud
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Set up Google Cloud credentials
+        run: echo "${{ secrets.GOOGLE_CLOUD_KEY_JSON }}" > key.json
+
+      - name: Authenticate with Google Cloud
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: key.json
+        run: |
+          gcloud auth activate-service-account --key-file=key.json
+
+      - name: Deploy to Google Cloud
+        run: gcloud app deploy
