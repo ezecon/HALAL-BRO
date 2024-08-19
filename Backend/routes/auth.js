@@ -33,7 +33,7 @@ router.post('/register', async (req, res) => {
     const payload = {
       user: {
         id: user._id,
-        email: user.email, // Add email to the payload
+        email: user.email, // Add email to the payload     
       },
     };
 
