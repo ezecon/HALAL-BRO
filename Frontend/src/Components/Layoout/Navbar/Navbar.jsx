@@ -26,7 +26,7 @@ export default function Navbar() {
             setUserInfo(response.data.user);
         } catch (error) {
             // If there's an error (e.g., no token or invalid token), navigate to login
-            navigate('/login');
+            
         } finally {
             setLoading(false);
         }
@@ -45,9 +45,7 @@ const handleLogout = async () => {
   }
 };
 
-const temp =()=>{
-  setData(false)
-}
+
   useEffect(() => {
     const smMediaQuery = window.matchMedia('(max-width: 640px)');
 
@@ -60,7 +58,7 @@ const temp =()=>{
             <Link to="/carts"><h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Cart</h1></Link>
             <Link to="/products"><h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Products</h1></Link>
             <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">About</h1>
-           {data ? (
+           {userInfo ? (
            <>
             <Menu>
             <MenuHandler>
@@ -156,7 +154,7 @@ const temp =()=>{
         </div>
        
           
-          {data ? (
+          {userInfo ? (
            <>
             <div className="flex flex-col montserrat-alternates-regular gap-y-4 h-full">
               <div className="flex gap-3 justify-center items-center text-[green]">
