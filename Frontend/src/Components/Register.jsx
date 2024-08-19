@@ -1,14 +1,44 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "./../services/authService";
 import toast from "react-hot-toast";
 import { Button, Input } from "@material-tailwind/react";
+import { auth, provider } from './../firebase/firebase'; // Adjust path as necessary
+import axios from "axios";
+import { signInWithPopup } from 'firebase/auth';
+import { FcGoogle } from "react-icons/fc";
+
+
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const navigate = useNavigate();
+
+  const handleGoogleLogin = async () => {
+    try {
+        const result = await signInWithPopup(auth, provider);
+        const idToken = await result.user.getIdToken();
+  
+        // Send token to your backend
+        const response = await axios.post('https://halal-bro-server.vercel.app/api/v2/auth/google-signin', {
+            idToken,
+        });
+  
+        // Handle successful login
+        toast.success('Login successful');
+        const { token, uid } = response.data;
+        console.log("JWT Token:", token);
+        localStorage.setItem('jwtToken', token);
+        localStorage.setItem('googleUid', uid);
+        navigate("/");
+  
+    } catch (error) {
+        console.error("Google login failed:", error);
+        toast.error('Google login failed');
+    }
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -70,6 +100,10 @@ const Register = () => {
                           Register
                       </Button>
                   </form>
+                  <div className='flex flex-col justify-center items-center'>
+                    <FcGoogle onClick={handleGoogleLogin} className='text-3xl'/>
+                    <p className='montserrat-alternates-light  text-sm'>with google?</p>
+                </div>
               </div>
           </div>
   </div>

@@ -94,11 +94,11 @@ const Login = () => {
                         Login
                     </Button>
                 </form>
-                <div>
+                <div className='flex flex-col justify-center items-center'>
                     <FcGoogle onClick={handleGoogleLogin} className='text-3xl'/>
-                  
+                    <p className='montserrat-alternates-light  text-sm'>with google?</p>
                 </div>
-                <p className='montserrat-alternates-light  text-sm'>with google?</p>
+                
             </div>
         </div>
 </div>
