@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Set up Google Cloud credentials
-        run: echo "${{ secrets.GOOGLE_CLOUD_KEY_JSON }}" > key.json
+        run: echo "${{ secrets.key }}" > key.json
 
       - name: Authenticate with Google Cloud
         env:
