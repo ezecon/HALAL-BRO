@@ -21,14 +21,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Set up Google Cloud credentials
-        run: echo "${{ secrets.key }}" > key.json
+      - name: Save secret key to file
+        run: echo "${{ secrets.key }}" > ./Backend/Config/key.json
 
       - name: Authenticate with Google Cloud
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: key.json
+          GOOGLE_APPLICATION_CREDENTIALS: ./Backend/Config/key.json
         run: |
-          gcloud auth activate-service-account --key-file=key.json
+          gcloud auth activate-service-account --key-file=./Backend/Config/key.json
 
       - name: Deploy to Google Cloud
         run: gcloud app deploy
