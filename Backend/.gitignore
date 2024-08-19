@@ -7,10 +7,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-Config/key.json
-
-Backend/Config/key.json
-
 
 node_modules
 dist
