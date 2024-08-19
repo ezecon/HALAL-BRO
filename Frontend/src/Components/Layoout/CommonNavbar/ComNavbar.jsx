@@ -22,9 +22,9 @@ const temp =()=>{
         // Small screen
         setDisplayComponent(
           <>
-            <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Cart</h1>
-            <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Products</h1>
-            <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">About</h1>
+            <Link to="/carts"><h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Cart</h1></Link>
+            <Link to="/products"><h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Products</h1></Link>
+            <Link to="/about"><h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">About</h1></Link>
            {data ? (
            <>
             <Menu>

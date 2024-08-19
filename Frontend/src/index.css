@@ -14,6 +14,10 @@
     font-style: normal;
   }
   
+  .common{
+    font-family: "Montserrat Alternates", sans-serif;
+  }
+  
   .montserrat-alternates-extralight {
     font-family: "Montserrat Alternates", sans-serif;
     font-weight: 200;

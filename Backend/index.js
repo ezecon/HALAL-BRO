@@ -38,6 +38,12 @@ app.use('/api/v2/auth', authRoutes);
 const user = require('./routes/User.js');
 app.use('/api/v2/users', user);
 
+const cart = require('./routes/cart.js');
+app.use('/api/v2/carts', cart);
+
+const order = require('./routes/order.js');
+app.use('/api/v2/orders', order);
+
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });

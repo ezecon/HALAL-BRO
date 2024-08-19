@@ -81,7 +81,7 @@ if(loading){
           <>
             <Link to="/carts"><h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Cart</h1></Link>
             <Link to="/products"><h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">Products</h1></Link>
-            <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">About</h1>
+            <Link to="/about"><h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">About</h1></Link>
            {userID ? (
            <>
             <Menu>
@@ -90,7 +90,7 @@ if(loading){
             </MenuHandler>
             <MenuList>
               <Link to="/profile"><MenuItem>Profile</MenuItem></Link>
-              <MenuItem>Dashboard</MenuItem>
+             <Link to="/dashboard"> <MenuItem>Dashboard</MenuItem></Link>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </MenuList>
           </Menu>
@@ -188,7 +188,7 @@ if(loading){
                 
               </div>
               <div className="bg-[#cdcecd67] p-5 rounded-lg flex justify-between">
-                  <h1 className="text-[green] cursor-pointer hover:text-gray-300">Dashboard</h1>
+                  <Link to="/dashboard"><h1 className="text-[green] cursor-pointer hover:text-gray-300">Dashboard</h1></Link>
                   <h1 onClick={handleLogout}className="text-[green] cursor-pointer hover:text-gray-300">Logout</h1>
                 </div>
               <Link to="/carts"><h1 className="text-[green] cursor-pointer hover:text-gray-300">Cart</h1></Link>

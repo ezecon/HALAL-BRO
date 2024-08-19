@@ -108,9 +108,11 @@ export default function Navbar() {
             <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">
               Products
             </h1>
+            <Link to="orders">
             <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">
-              About
+              Orders
             </h1>
+            </Link>
             {data ? (
               <Menu>
                 <MenuHandler>

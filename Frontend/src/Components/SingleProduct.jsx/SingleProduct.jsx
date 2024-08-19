@@ -33,7 +33,23 @@ export default function SingleProduct() {
     }
 
     if (!data) {
-        return <div className="text-center">Loading...</div>; // Loading state
+        return <div className="flex flex-col justify-center items-center h-screen bg-black gap-y-4">
+       <span className="loader"></span>
+       <div className="text-animation-container">
+          <h1 className="text-animation">
+            <span className="word">H</span>
+            <span className="word">A</span>
+            <span className="word">L</span>
+            <span className="word">A</span>
+            <span className="word">L</span>
+            <span className="word"> </span>
+            <span className="word">B</span>
+            <span className="word">R</span>
+            <span className="word">O</span>
+          </h1>
+        </div>
+        <img src="logo/logo.jpg" className="w-14 rounded-full" alt="" />
+      </div>;
     }
 
     return (
@@ -41,10 +57,10 @@ export default function SingleProduct() {
             <ComNavbar />
             <div className='flex justify-center items-center'>
                 <div className='grid grid-cols-1 sm:grid-cols-2 justify-center items-center relative con'>
-                    <div className='bg-[#ffffff88] p-5 m-5 rounded-lg flex flex-col justify-center items-center'>
-                        <h1 className='text-white font-bold new-amsterdam-regular text-2xl py-5'>{data.name}</h1>
+                    <div className='rounded-lg flex flex-col justify-center items-center'>
+                        <h1 className='text-white font-bold new-amsterdam-regular text-5xl py-5'>{data.name}</h1>
                         <img src={data.image} className='w-2/3 my-10 rounded-lg shadow-xl hero-loop' alt={data.name} />
-                        <p className='text-white font-bold new-amsterdam-regular text-xl'>${data.price}</p>
+                        <p className='text-white font-bold new-amsterdam-regular text-2xl'>{data.price} ৳</p>
                     </div>
                     <div className='bg-white w-full h-full flex flex-col justify-center items-center'>
                         <details className="group w-full max-w-lg py-10">
