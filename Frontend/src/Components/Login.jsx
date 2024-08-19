@@ -16,23 +16,24 @@ const Login = () => {
         try {
             const result = await signInWithPopup(auth, provider);
             const idToken = await result.user.getIdToken();
-
+    
             // Send token to your backend
-            const response = await axios.post('http://localhost:3000/api/v2/auth/google-signin', {
+            const response = await axios.post('https://halal-bro-server.vercel.app/api/v2/auth/google-signin', {
                 idToken,
             }, { withCredentials: true });
-
+    
             // Handle successful login
             toast.success('Login successful');
             const { uid } = response.data;
             console.log("Google UID:", uid);
             navigate("/");
-
+    
         } catch (error) {
             console.error("Google login failed:", error);
             toast.error('Google login failed');
         }
     };
+    
 
     const handleEmailPasswordLogin = async (e) => {
         e.preventDefault();

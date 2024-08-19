@@ -87,45 +87,47 @@ router.post('/login', async (req, res) => {
 // Google Sign-In
 router.post('/google-signin', async (req, res) => {
   const { idToken } = req.body;
-
+  
   try {
-    // Verify the ID token with Firebase
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
-    const { uid, email, name } = decodedToken;
+      // Verify the ID token with Firebase
+      const decodedToken = await admin.auth().verifyIdToken(idToken);
+      const { uid, email, name } = decodedToken;
 
-    // Check if the user exists in MongoDB
-    let user = await User.findOne({ uid });
-    
-    if (!user) {
-      // If the user doesn't exist, create a new one
-      user = new User({
-        uid,
-        email,
-        displayName: name,
-      });
+      // Check if the user exists in MongoDB
+      let user = await User.findOne({ email: uid });
+      
+      if (!user) {
+          // If the user doesn't exist, create a new one
+          user = new User({
+              uid,
+              email,
+              displayName: name,
+          });
 
-      await user.save();
-    }
+          await user.save();
+      }
 
-    // Generate a JWT token with id and email
-    const payload = {
-      user: {
-        id: user._id,
-        email: user.email, // Add email to the payload
-      },
-    };
+      // Generate a JWT token with id and email
+      const payload = {
+          user: {
+              id: user._id,
+              email: user.email,
+          },
+      };
 
-    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
+      const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
 
-    // Set the token in an HTTP-only cookie
-    res.cookie('token', token, { httpOnly: true, maxAge: 3600000 });
+      // Set the token in an HTTP-only cookie
+      res.cookie('token', token, { httpOnly: true, maxAge: 3600000 });
 
-    // Return the Google UID
-    res.json({ msg: 'Login successful', uid: user.uid });
+      // Return the Google UID
+      res.json({ msg: 'Login successful', uid: user.uid });
   } catch (error) {
-    res.status(400).send('Invalid Google ID Token');
+      console.error("Google Sign-In error:", error);
+      res.status(400).send('Invalid Google ID Token');
   }
 });
+
 
 // Route to retrieve user info
 router.get('/user-info', (req, res) => {

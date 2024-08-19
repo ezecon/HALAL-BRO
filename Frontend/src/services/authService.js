@@ -8,7 +8,9 @@ export const registerUser = async (email, password, displayName) => {
     const response = await axios.post(`${API_URL}/register`, { email, password, displayName });
     return response.data;
   } catch (error) {
-    throw error.response.data;
+    // Ensure error.response.data is defined
+    const errorMessage = error.response?.data?.msg || 'Registration failed';
+    throw new Error(errorMessage);
   }
 };
 
@@ -16,10 +18,13 @@ export const registerUser = async (email, password, displayName) => {
 export const loginUser = async (email, password) => {
   try {
     const response = await axios.post(`${API_URL}/login`, { email, password });
-    localStorage.setItem('token', response.data.token);
+    // Handle token as per your storage method
+    // localStorage.setItem('token', response.data.token);
     return response.data;
   } catch (error) {
-    throw error.response.data;
+    // Ensure error.response.data is defined
+    const errorMessage = error.response?.data?.msg || 'Login failed';
+    throw new Error(errorMessage);
   }
 };
 
@@ -27,9 +32,12 @@ export const loginUser = async (email, password) => {
 export const loginWithGoogle = async (idToken) => {
   try {
     const response = await axios.post(`${API_URL}/google-signin`, { idToken });
-    localStorage.setItem('token', response.data.token);
+    // Handle token as per your storage method
+    // localStorage.setItem('token', response.data.token);
     return response.data;
   } catch (error) {
-    throw error.response.data;
+    // Ensure error.response.data is defined
+    const errorMessage = error.response?.data?.msg || 'Google login failed';
+    throw new Error(errorMessage);
   }
 };
