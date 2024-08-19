@@ -20,7 +20,8 @@ const Login = () => {
             // Send token to your backend
             const response = await axios.post('http://localhost:3000/api/v2/auth/google-signin', {
                 idToken,
-            }, { withCredentials: true });
+            }, { withCredentials: true }); // Ensure credentials are included
+            
 
             // Handle successful login
             toast.success('Login successful');
