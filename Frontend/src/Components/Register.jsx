@@ -25,7 +25,8 @@ const Register = () => {
         const response = await axios.post('https://halal-bro-server.vercel.app/api/v2/auth/google-signin', {
             idToken,
         });
-  
+        
+        
         // Handle successful login
         toast.success('Login successful');
         const { token, uid } = response.data;
