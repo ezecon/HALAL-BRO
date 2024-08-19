@@ -84,49 +84,45 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Google Sign-In
-router.post('/google-signin', async (req, res) => {
-  const { idToken } = req.body;
-  
-  try {
-      // Verify the ID token with Firebase
-      const decodedToken = await admin.auth().verifyIdToken(idToken);
-      const { uid, email, name } = decodedToken;
 
-      // Check if the user exists in MongoDB
-      let user = await User.findOne({ email: uid });
-      
-      if (!user) {
-          // If the user doesn't exist, create a new one
-          user = new User({
-              uid,
-              email,
-              displayName: name,
-          });
 
-          await user.save();
-      }
-
-      // Generate a JWT token with id and email
-      const payload = {
-          user: {
-              id: user._id,
-              email: user.email,
-          },
-      };
-
-      const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
-
-      // Set the token in an HTTP-only cookie
-      res.cookie('token', token, { httpOnly: true, maxAge: 3600000 });
-
-      // Return the Google UID
-      res.json({ msg: 'Login successful', uid: user.uid });
-  } catch (error) {
-      console.error("Google Sign-In error:", error);
-      res.status(400).send('Invalid Google ID Token');
-  }
+// Initialize Firebase Admin SDK
+admin.initializeApp({
+    credential: admin.credential.applicationDefault() // Ensure you have the correct credentials
 });
+
+router.post('/google-signin', async (req, res) => {
+    const { idToken } = req.body;
+    
+    try {
+        // Verify the ID token
+        const decodedToken = await admin.auth().verifyIdToken(idToken);
+        const { uid, email, name } = decodedToken;
+
+        // Your logic here (e.g., check if the user exists in the database, etc.)
+        // Example:
+        let user = await User.findOne({ email: uid });
+        
+        if (!user) {
+            user = new User({
+                uid,
+                email,
+                displayName: name,
+            });
+            await user.save();
+        }
+
+        const payload = { user: { id: user._id, email: user.email } };
+        const token = jwt.sign(payload, 'your_secret_key', { expiresIn: '1h' });
+        
+        res.cookie('token', token, { httpOnly: true, maxAge: 3600000 });
+        res.json({ msg: 'Login successful', uid: user.uid });
+    } catch (error) {
+        console.error("Error verifying ID token:", error);
+        res.status(400).send('Invalid Google ID Token');
+    }
+});
+
 
 
 // Route to retrieve user info
