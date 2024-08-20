@@ -10,7 +10,7 @@ export default function Profile() {
   const { token, removeToken } = useToken();
   const navigate = useNavigate();
   const [userID, setUserID] = useState(null);
-  let temp = {
+  const [userInfo, setUserInfo] = useState({
     name: "",
     address: "",
     number: "",
@@ -18,26 +18,26 @@ export default function Profile() {
     district: "",
     image: "",
     date: ""
-  };
-  const [userInfo, setUserInfo] = useState(temp);
+  });
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
+    if(!token){
+      removeToken();
+      navigate('/login');
+    }
     const verifyToken = async () => {
       try {
         const response = await axios.post('http://localhost:3000/api/v2/auth-user-info', { token });
         if (response.status === 200 && response.data.valid) {
           setUserID(response.data.decoded.id);
-          console.log(userID)
         } else {
-          console.log("Token verification failed");
           removeToken();
-          navigate('/login'); // Redirect to login if token is invalid
+          navigate('/login');
         }
       } catch (error) {
-        console.error('Error verifying token:', error);
         removeToken();
-        navigate('/login'); // Redirect to login if there's an error
+        navigate('/login');
       }
     };
 
@@ -51,9 +51,6 @@ export default function Profile() {
           const response = await axios.get(`http://localhost:3000/api/v2/users/${userID}`);
           if (response.status === 200) {
             setUserInfo(response.data.item);
-            console.log(response.data.item);
-          } else {
-            console.log(response.data);
           }
         } catch (err) {
           console.error('Error fetching user info:', err);

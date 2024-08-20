@@ -34,7 +34,7 @@ export default function Navbar() {
     };
 
     verifyToken();
-  }, [token, navigate, removeToken]);
+  }, [token]);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -43,6 +43,7 @@ export default function Navbar() {
           const response = await axios.get(`http://localhost:3000/api/v2/users/${userID}`);
           if (response.status === 200) {
             setUserInfo(response.data.item);
+            console.log(response.data.item);
           } else {
             console.log(response.data);
           }
@@ -55,7 +56,7 @@ export default function Navbar() {
     if (userID) {
       fetchUserInfo();
     }
-  }, [userID]);
+  });
   
 
 
@@ -78,7 +79,7 @@ export default function Navbar() {
            <>
             <Menu>
             <MenuHandler>
-                <Avatar src="/1.jpg" className=" border-green-600 border-2 cursor-pointer" size="md" />
+                <Avatar src={userInfo && userInfo.image} className=" border-green-600 border-2 cursor-pointer" size="md" />
             </MenuHandler>
             <MenuList>
               <Link to="/profile"><MenuItem>Profile</MenuItem></Link>
@@ -178,7 +179,7 @@ export default function Navbar() {
            <>
             <div className="flex flex-col montserrat-alternates-regular gap-y-4 h-full">
               <div className="flex flex-col gap-3 justify-center items-center text-[green]">
-              <Link to="/profile">  <Avatar src="/1.jpg" className="border-green-600 border-2" size="md" /></Link>
+              <Link to="/profile">  <Avatar src={userInfo && userInfo.image} className="border-green-600 border-2" size="md" /></Link>
                 <h1 className="montserrat-alternates-bold">{userInfo && userInfo.name}</h1>
                 <h1>{!userInfo && <p>Loading..</p>}</h1>
                 

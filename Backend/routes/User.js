@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
 // PUT update user by ID (including image upload)
 router.put('/:id', upload.single('image'), async (req, res) => {
     try {
-        const { displayName, address, number, email, district } = req.body;
+        const { name, address, number, email, district } = req.body;
 
         let user = await User.findById(req.params.id);
         if (!user) {
@@ -36,7 +36,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
         }
 
         // Update fields
-        user.displayName = displayName || user.displayName;
+        user.name = name || user.name;
         user.address = address || user.address;
         user.number = number || user.number;
         user.email = email || user.email;
