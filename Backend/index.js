@@ -1,33 +1,29 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+const cors= require('cors');
 const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser');
 
 const app = express();
+
+//middleware
+app.use(bodyParser.json());
+app.use(cors());
 const port = 3000;
 
-// Middlewares
-app.use(express.json({ extended: false }));
-app.use(bodyParser.json());
-app.use(cookieParser());
 
-// Configure CORS
-app.use(cors({
-  origin: 'https://halal-bro-shop.vercel.app', 
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+//mongodb
+mongoose.connect('mongodb+srv://mdeconozzama:NC7qFlCX5oHHrGcJ@ajdsiwipdhiph.ohx5p.mongodb.net/data?retryWrites=true&w=majority&appName=Cluster0',{ 
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}
+)
 
-// Connect to MongoDB
-mongoose.connect('mongodb+srv://mdeconozzama:UFyGpfTmxCEVKHrU@cluster0.7fkqi.mongodb.net/database?retryWrites=true&w=majority&appName=Cluster0', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+const db = mongoose.connection;
+db.on('error',console.error.bind(console,'connection error:'));
+db.once('open',()=>{
+    console.log('connceted to db');
 })
-.then(() => console.log('MongoDB connected'))
-.catch(err => {
-  console.error(err.message);
-  process.exit(1);   
-});
+
 
 // Routes
 const product = require('./routes/products.js');

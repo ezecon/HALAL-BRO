@@ -10,7 +10,7 @@ export default function Profile() {
   const { token, removeToken } = useToken();
   const navigate = useNavigate();
   const [userID, setUserID] = useState(null);
-  const [userInfo, setUserInfo] = useState({
+  let temp = {
     name: "",
     address: "",
     number: "",
@@ -18,26 +18,26 @@ export default function Profile() {
     district: "",
     image: "",
     date: ""
-  });
+  };
+  const [userInfo, setUserInfo] = useState(temp);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    if(!token){
-      removeToken();
-      navigate('/login');
-    }
     const verifyToken = async () => {
       try {
-        const response = await axios.post('https://halal-bro-server.vercel.app/api/v2/auth-user-info', { token });
+        const response = await axios.post('http://localhost:3000/api/v2/auth-user-info', { token });
         if (response.status === 200 && response.data.valid) {
           setUserID(response.data.decoded.id);
+          console.log(userID)
         } else {
+          console.log("Token verification failed");
           removeToken();
-          navigate('/login');
+          navigate('/login'); // Redirect to login if token is invalid
         }
       } catch (error) {
+        console.error('Error verifying token:', error);
         removeToken();
-        navigate('/login');
+        navigate('/login'); // Redirect to login if there's an error
       }
     };
 
@@ -48,9 +48,12 @@ export default function Profile() {
     const fetchUserInfo = async () => {
       if (userID) {
         try {
-          const response = await axios.get(`https://halal-bro-server.vercel.app/api/v2/users/${userID}`);
+          const response = await axios.get(`http://localhost:3000/api/v2/users/${userID}`);
           if (response.status === 200) {
             setUserInfo(response.data.item);
+            console.log(response.data.item);
+          } else {
+            console.log(response.data);
           }
         } catch (err) {
           console.error('Error fetching user info:', err);
@@ -68,7 +71,7 @@ export default function Profile() {
 
   const handleUpdate = async () => {
     try {
-      const response = await axios.put(`https://halal-bro-server.vercel.app/api/v2/users/${userID}`, userInfo);
+      const response = await axios.put(`http://localhost:3000/api/v2/users/${userID}`, userInfo);
       if (response.status === 200) {
         toast.success("Profile updated successfully");
         setIsEditing(false);
