@@ -12,7 +12,7 @@ export function Orders() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:3000/api/v2/orders`);
+        const response = await axios.get(`https://halal-bro-server.vercel.app/api/v2/orders`);
         if (response.status === 200) {
           setData(response.data.reverse());
         }
@@ -27,7 +27,7 @@ export function Orders() {
 
   const handleAcceptOrder = async (orderId) => {
     try {
-      const response = await axios.put(`http://localhost:3000/api/v2/orders/${orderId}`, {
+      const response = await axios.put(`https://halal-bro-server.vercel.app/api/v2/orders/${orderId}`, {
         status: 'Accepted'
       });
       if (response.status === 200) {

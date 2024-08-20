@@ -15,7 +15,7 @@ export function Dashboard() {
     const fetchUser = async () => {
       try {
         // Attempt to fetch user info from backend
-        const response = await axios.get('http://localhost:3000/api/v2/auth/user-info', { withCredentials: true });
+        const response = await axios.get('https://halal-bro-server.vercel.app/api/v2/auth/user-info', { withCredentials: true });
         setUserID(response.data.user.id);
         console.log(userID)
       } catch (error) {
@@ -55,7 +55,7 @@ export function Dashboard() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:3000/api/v2/orders/${userID}`);
+        const response = await axios.get(`https://halal-bro-server.vercel.app/api/v2/orders/${userID}`);
         if (response.status === 200) {
           setData(response.data.reverse());
         }
@@ -70,7 +70,7 @@ export function Dashboard() {
 
   const handleAcceptOrder = async (orderId) => {
     try {
-      const response = await axios.put(`http://localhost:3000/api/v2/orders/${orderId}`, {
+      const response = await axios.put(`http:/https://halal-bro-server.vercel.app/api/v2/orders/${orderId}`, {
         status: 'Delivered'
       });
       if (response.status === 200) {

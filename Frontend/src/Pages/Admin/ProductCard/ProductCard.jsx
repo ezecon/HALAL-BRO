@@ -26,7 +26,7 @@ export default function ProductCard({ product }) {
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:3000/api/v2/products/${id}`);
+      const res = await axios.delete(`https://halal-bro-server.vercel.app/api/v2/products/${id}`);
       if (res.status === 200) {
         toast.success("Product Deleted!");
       }
@@ -50,7 +50,7 @@ export default function ProductCard({ product }) {
     }
 
     try {
-      const res = await axios.put(`http://localhost:3000/api/v2/products/${_id}`, formData);
+      const res = await axios.put(`https://halal-bro-server.vercel.app/api/v2/products/${_id}`, formData);
       if (res.status === 200) {
         toast.success("Product Updated!");
         setOpen(false); // Close the dialog after successful update

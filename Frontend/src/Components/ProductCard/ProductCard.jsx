@@ -19,7 +19,6 @@ export default function ProductCard({ product }) {
         setUserID(response.data.user.id);
       } catch (error) {
         console.log(error);
-        toast.error("Failed to fetch user info.");
       } finally {
         setLoading(false);
       }
