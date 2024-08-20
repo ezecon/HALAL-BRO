@@ -32,7 +32,7 @@ export default function Information() {
       formData.append('email', userEmail);
       formData.append('district', selectedDistrict);
       formData.append('address', address);
-      formData.append('photo', photo); // Ensure photo is a File object
+      formData.append('image', photo); // Ensure photo is a File object
 
       const response = await axios.put('http://localhost:3000/api/v2/auth/update', formData, {
         headers: {

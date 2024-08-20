@@ -100,14 +100,12 @@ router.put('/verify', async (req, res) => {
 });
 
 // Update user by email (without photo)********
-router.put('/update', upload.single('photo'), async (req, res) => {
+router.put('/update', upload.single('image'), async (req, res) => {
     const { 
         email, 
-        division,
-        upazilas,
-        zipCode,
+
         district,
-        country,
+
         address
     } = req.body;
 
@@ -131,16 +129,13 @@ router.put('/update', upload.single('photo'), async (req, res) => {
         }
 
         const updateData = {
-            division,
-            upazilas,
-            zipCode,
+   
             district,
-            country,
             address
         };
 
         if (photoUrl) {
-            updateData.photo = photoUrl;
+            updateData.image = photoUrl;
         }
 
         const updatedUser = await User.findOneAndUpdate({ email }, updateData, { new: true });

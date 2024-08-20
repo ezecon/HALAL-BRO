@@ -13,10 +13,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Configure CORS
-app.use(cors({
-  origin: 'http://localhost:5173', // Replace with the origin of your frontend
-  credentials: true // Allow credentials to be sent
-}));
+app.use(cors());
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://mdeconozzama:UFyGpfTmxCEVKHrU@cluster0.7fkqi.mongodb.net/database?retryWrites=true&w=majority&appName=Cluster0', {
@@ -40,7 +37,7 @@ const authLogin = require('./Verification/Auth.js');
 app.use('/api/v2/auth-login', authLogin);
 
 const authVerify = require('./Verification/verifytoken.js');
-app.use('/api/v2/auth/user-info', authVerify);
+app.use('/api/v2/auth-user-info', authVerify);
 
 const user = require('./routes/User.js');
 app.use('/api/v2/users', user);

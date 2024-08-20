@@ -8,11 +8,11 @@ import { useToken } from "../../Hook/useToken";
 
 export default function Navbar() {
   const [displayComponent, setDisplayComponent] = useState(null); // State to hold the rendered component
-  const { token, removeToken } = useToken();
+ 
   const [openRight, setOpenRight] = useState(false)
   const openDrawerRight = () => setOpenRight(true);
   const closeDrawerRight = () => setOpenRight(false);
-
+  const { token, removeToken } = useToken();
   const navigate = useNavigate();
   const [userID, setUserID] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
@@ -21,15 +21,15 @@ export default function Navbar() {
     const verifyToken = async () => {
 
       try {
-        const response = await axios.post('https://halal-bro-server.vercel.app/api/v2/auth/user-info', { token });
+        const response = await axios.post('http://localhost:3000/api/v2/auth-user-info', { token });
         if (response.status === 200 && response.data.valid) {
           setUserID(response.data.decoded.id);
         } else {
-          removeToken();
+          console.log("Something wents wrong")
         }
       } catch (error) {
         console.error('Error verifying token:', error);
-        removeToken();
+       //
       }
     };
 
@@ -40,9 +40,9 @@ export default function Navbar() {
     const fetchUserInfo = async () => {
       if (userID) {
         try {
-          const response = await axios.get(`https://halal-bro-server.vercel.app/api/v2/users/${userID}`);
+          const response = await axios.get(`http://localhost:3000/api/v2/users/${userID}`);
           if (response.status === 200) {
-            setUserInfo(response.data);
+            setUserInfo(response.data.item);
           } else {
             console.log(response.data);
           }
@@ -59,14 +59,7 @@ export default function Navbar() {
   
 
 
-const handleLogout = async () => {
-  try {
-      await axios.post('https://halal-bro-server.vercel.app/api/v2/auth/logout', {}, { withCredentials: true });
-      navigate('/login');
-  } catch (error) {
-      console.error('Logout failed:', error);
-  }
-};
+
 
 
   useEffect(() => {
@@ -121,6 +114,10 @@ const handleLogout = async () => {
     return () => smMediaQuery.removeEventListener('change', handleScreenSizeChange);
   });
 
+  const handleLogout = ()=>{
+    removeToken();
+    navigate(`/login`)
+  }
   return (
     <div className="bg-[#fdfdfd33] w-full h-20 flex justify-between items-center px-6">
       <Link to="/">
@@ -182,7 +179,7 @@ const handleLogout = async () => {
             <div className="flex flex-col montserrat-alternates-regular gap-y-4 h-full">
               <div className="flex flex-col gap-3 justify-center items-center text-[green]">
               <Link to="/profile">  <Avatar src="/1.jpg" className="border-green-600 border-2" size="md" /></Link>
-                <h1 className="montserrat-alternates-bold">{userInfo && userInfo.displayName}</h1>
+                <h1 className="montserrat-alternates-bold">{userInfo && userInfo.name}</h1>
                 <h1>{!userInfo && <p>Loading..</p>}</h1>
                 
               </div>

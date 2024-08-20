@@ -16,6 +16,7 @@ import {
 } from "@material-tailwind/react";
 import ComNavbar from "../Layoout/CommonNavbar/ComNavbar";
 import { useNavigate } from "react-router-dom";
+import { useToken } from "../Hook/useToken";
  
 
 export default function Cart() {
@@ -39,29 +40,26 @@ export default function Cart() {
     setPaymentMethod(e);
   };
 
-  const [loading, setLoading] = useState(true);
+  const { token } = useToken();
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const verifyToken = async () => {
       try {
-        // Attempt to fetch user info from backend
-        const response = await axios.get('https://halal-bro-server.vercel.app/api/v2/auth/user-info', { withCredentials: true });
-        setUserID(response.data.user.id);
+        const response = await axios.post('http://localhost:3000/api/v2/auth-user-info', { token });
+        if (response.status === 200 && response.data.valid) {
+          setUserID(response.data.decoded.id);
+          console.log(userID)
+        } else {
+          console.log("Something went wrong");
+        }
       } catch (error) {
-        navigate(`/login`)
-        console.log(error);
-      } finally {
-        setLoading(false);
+        console.error('Error verifying token:', error);
       }
     };
-  
-    fetchUser();
-  }, []); // Empty dependency array to run only on component mount
-  if(loading){
-    <>
-    
-    <p>loading</p></>
-  }
+
+    verifyToken();
+  }, [token]);
+
 
   useEffect(() => {
     const fetchCarts = async () => {

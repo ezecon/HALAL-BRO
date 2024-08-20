@@ -15,7 +15,8 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from 'react-hot-toast'; // Import toast
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useToken } from "../../../Components/Hook/useToken";
 
 export default function Navbar() {
   const [displayComponent, setDisplayComponent] = useState(null);
@@ -29,6 +30,50 @@ export default function Navbar() {
 
   const handleOpen = () => setOpen(true); // Open dialog
   const handleClose = () => setOpen(false); // Close dialog
+  const { token, removeToken } = useToken();
+  const navigate = useNavigate();
+  const [userID, setUserID] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    const verifyToken = async () => {
+
+      try {
+        const response = await axios.post('http://localhost:3000/api/v2/auth-user-info', { token });
+        if (response.status === 200 && response.data.valid) {
+          setUserID(response.data.decoded.id);
+        } else {
+          console.log("Something wents wrong")
+        }
+      } catch (error) {
+        console.error('Error verifying token:', error);
+       //
+      }
+    };
+
+    verifyToken();
+  }, [token, navigate, removeToken]);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      if (userID) {
+        try {
+          const response = await axios.get(`http://localhost:3000/api/v2/users/${userID}`);
+          if (response.status === 200) {
+            setUserInfo(response.data.item);
+          } else {
+            console.log(response.data);
+          }
+        } catch (err) {
+          console.error('Error fetching user info:', err);
+        }
+      }
+    };
+
+    if (userID) {
+      fetchUserInfo();
+    }
+  }, [userID]);
 
   const temp = () => {
     setData(false);
@@ -82,7 +127,7 @@ export default function Navbar() {
           <Menu>
             <MenuHandler>
               <Avatar
-                src="/1.jpg"
+                src={userInfo && userInfo.image}
                 className="border-green-600 border-2 cursor-pointer"
                 size="md"
               />
@@ -117,7 +162,7 @@ export default function Navbar() {
               <Menu>
                 <MenuHandler>
                   <Avatar
-                    src="/1.jpg"
+                    src={userInfo && userInfo.image}
                     className="border-green-600 border-2 cursor-pointer"
                     size="md"
                   />

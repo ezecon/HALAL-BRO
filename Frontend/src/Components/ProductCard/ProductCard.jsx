@@ -3,29 +3,36 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaOpencart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useToken } from "../Hook/useToken";
 
 export default function ProductCard({ product }) {
-  const navigate = useNavigate();
+
   const cardClasses = "p-4 rounded-lg shadow-lg bg-white transform hover:scale-105 transition-transform duration-300";
   const {_id, name, price, image} = product;
   
+  const { token } = useToken();
+  const navigate = useNavigate();
   const [userID, setUserID] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const verifyToken = async () => {
       try {
-        const response = await axios.get('https://halal-bro-server.vercel.app/api/v2/auth/user-info', { withCredentials: true });
-        setUserID(response.data.user.id);
+        const response = await axios.post('http://localhost:3000/api/v2/auth-user-info', { token });
+        if (response.status === 200 && response.data.valid) {
+          setUserID(response.data.decoded.id);
+          console.log(userID)
+        } else {
+          console.log("Something went wrong");
+        }
       } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
+        console.error('Error verifying token:', error);
       }
     };
-  
-    fetchUser();
-  }, []);
+
+    verifyToken();
+  }, [token]);
+
+ 
 
   const handleCart = async () => {
     if (!userID) {

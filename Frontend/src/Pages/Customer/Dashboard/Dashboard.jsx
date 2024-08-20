@@ -3,30 +3,34 @@ import { useEffect, useState } from "react";
 import { MdBorderColor } from "react-icons/md";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import Navbar from "../../../Components/Layoout/Navbar/Navbar";
+import { useToken } from "../../../Components/Hook/useToken";
 
 export function Dashboard() {
   const [data, setData] = useState([]);
   const navigate = useNavigate(); // Initialize useNavigate hook
-
+  const { token, removeToken } = useToken();
   const [userID, setUserID] = useState(null);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
-    const fetchUser = async () => {
+    const verifyToken = async () => {
+
       try {
-        // Attempt to fetch user info from backend
-        const response = await axios.get('https://halal-bro-server.vercel.app/api/v2/auth/user-info', { withCredentials: true });
-        setUserID(response.data.user.id);
-        console.log(userID)
+        const response = await axios.post('http://localhost:3000/api/v2/auth-user-info', { token });
+        if (response.status === 200 && response.data.valid) {
+          setUserID(response.data.decoded.id);
+        } else {
+          console.log("Something wents wrong")
+        }
       } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
+        console.error('Error verifying token:', error);
+       //
       }
     };
-  
-    fetchUser();
-  }, []); // Empty dependency array to run only on component mount
+
+    verifyToken();
+  }, [token, navigate, removeToken]);
   if(loading){
     <>
     
@@ -55,7 +59,7 @@ export function Dashboard() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`https://halal-bro-server.vercel.app/api/v2/orders/${userID}`);
+        const response = await axios.get(`http://localhost:3000/api/v2/orders/`);
         if (response.status === 200) {
           setData(response.data.reverse());
         }
@@ -70,7 +74,7 @@ export function Dashboard() {
 
   const handleAcceptOrder = async (orderId) => {
     try {
-      const response = await axios.put(`http:/https://halal-bro-server.vercel.app/api/v2/orders/${orderId}`, {
+      const response = await axios.put(`http://localhost:3000/api/v2/orders/${orderId}`, {
         status: 'Delivered'
       });
       if (response.status === 200) {
@@ -118,7 +122,8 @@ export function Dashboard() {
       </h1>
 
       <div className=" common w-full sm:w-2/3 p-5 bg-white rounded-xl">
-        {data.map((order) => (
+        {data.filter(item=> item.userId===userID)
+        .map((order) => (
           <div key={order._id} className="mb-10 border-b-2 border-[goldenrod]">
             <h2 className="text-xl font-semibold mb-2">Order ID: {order._id}</h2>
             <a href={`check-user/${order.userId}`}><button className=" border rounded-lg bg-[goldenrod] text-white px-2">User</button></a>
