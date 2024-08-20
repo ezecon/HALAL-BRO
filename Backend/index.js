@@ -12,7 +12,7 @@ app.use(express.json({ extended: false }));
 app.use(bodyParser.json());
 // Configure CORS
 app.use(cors({
-  origin: 'http://localhost:5173', // Replace with the origin of your frontend
+  origin: 'https://halal-bro-shop.vercel.app', // Replace with the origin of your frontend
   credentials: true // Allow credentials to be sent
 }));
 app.use(cookieParser())
