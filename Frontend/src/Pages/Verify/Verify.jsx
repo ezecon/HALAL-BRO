@@ -18,7 +18,7 @@ export default function Verify() {
         if (verificationCode === code) {
             try {
                 
-                const response = await axios.put('http://localhost:3000/api/v2/auth/verify', { email: userEmail });
+                const response = await axios.put('https://halal-bro-server.vercel.app/api/v2/auth/verify', { email: userEmail });
     
                 if (response.data.error) {
                     toast.error(userEmail);
@@ -48,7 +48,7 @@ export default function Verify() {
     useEffect(() => {
         const fetch = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/v2/auth/verify/${userEmail}`);
+                const response = await axios.get(`https://halal-bro-server.vercel.app/api/v2/auth/verify/${userEmail}`);
                 if (response.status === 200) {
                     console.log("data fetched");
                     setState(response.data.isVerified);

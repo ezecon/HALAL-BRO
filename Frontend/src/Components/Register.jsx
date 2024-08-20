@@ -59,7 +59,7 @@ const handleSubmit = async (event) => {
     }; 
   
     try {
-      const response = await axios.post(`http://localhost:3000/api/v2/auth/register`, newUser);
+      const response = await axios.post(`https://halal-bro-server.vercel.app/api/v2/auth/register`, newUser);
       
       if (response.data.error) {
         toast.error(response.data.error);

@@ -21,7 +21,7 @@ export default function Navbar() {
     const verifyToken = async () => {
 
       try {
-        const response = await axios.post('http://localhost:3000/api/v2/auth-user-info', { token });
+        const response = await axios.post('https://halal-bro-server.vercel.app/api/v2/auth-user-info', { token });
         if (response.status === 200 && response.data.valid) {
           setUserID(response.data.decoded.id);
         } else {
@@ -40,7 +40,7 @@ export default function Navbar() {
     const fetchUserInfo = async () => {
       if (userID) {
         try {
-          const response = await axios.get(`http://localhost:3000/api/v2/users/${userID}`);
+          const response = await axios.get(`https://halal-bro-server.vercel.app/api/v2/users/${userID}`);
           if (response.status === 200) {
             setUserInfo(response.data.item);
             console.log(response.data.item);

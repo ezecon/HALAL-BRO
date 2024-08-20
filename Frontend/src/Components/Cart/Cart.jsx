@@ -45,7 +45,7 @@ export default function Cart() {
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const response = await axios.post('http://localhost:3000/api/v2/auth-user-info', { token });
+        const response = await axios.post('https://halal-bro-server.vercel.app/api/v2/auth-user-info', { token });
         if (response.status === 200 && response.data.valid) {
           setUserID(response.data.decoded.id);
           console.log(userID)

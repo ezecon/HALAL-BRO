@@ -34,7 +34,7 @@ export default function Information() {
       formData.append('address', address);
       formData.append('image', photo); // Ensure photo is a File object
 
-      const response = await axios.put('http://localhost:3000/api/v2/auth/update', formData, {
+      const response = await axios.put('https://halal-bro-server.vercel.app/api/v2/auth/update', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

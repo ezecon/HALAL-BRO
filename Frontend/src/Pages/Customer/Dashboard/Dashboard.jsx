@@ -17,7 +17,7 @@ export function Dashboard() {
     const verifyToken = async () => {
 
       try {
-        const response = await axios.post('http://localhost:3000/api/v2/auth-user-info', { token });
+        const response = await axios.post('https://halal-bro-server.vercel.app/api/v2/auth-user-info', { token });
         if (response.status === 200 && response.data.valid) {
           setUserID(response.data.decoded.id);
         } else {
@@ -59,7 +59,7 @@ export function Dashboard() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:3000/api/v2/orders/`);
+        const response = await axios.get(`https://halal-bro-server.vercel.app/api/v2/orders/`);
         if (response.status === 200) {
           setData(response.data.reverse());
         }
@@ -74,7 +74,7 @@ export function Dashboard() {
 
   const handleAcceptOrder = async (orderId) => {
     try {
-      const response = await axios.put(`http://localhost:3000/api/v2/orders/${orderId}`, {
+      const response = await axios.put(`https://halal-bro-server.vercel.app/api/v2/orders/${orderId}`, {
         status: 'Delivered'
       });
       if (response.status === 200) {
