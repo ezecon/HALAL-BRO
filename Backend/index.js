@@ -14,8 +14,7 @@ app.use(cookieParser());
 
 // Configure CORS
 app.use(cors({
-  origin: 'https://halal-bro-shop.vercel.app', // Your frontend URL
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: 'https://halal-bro-shop.vercel.app', 
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
