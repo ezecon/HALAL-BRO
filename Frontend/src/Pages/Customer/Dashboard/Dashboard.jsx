@@ -131,7 +131,7 @@ export function Dashboard() {
          {order.status==="Accepted" && 
             <button className="btn-15 m-5" onClick={() => handleAcceptOrder(order._id)}>
             <span className="text-container">
-              <span className="text">Accept</span>
+              <span className="text">Received</span>
             </span>
           </button>}
             
