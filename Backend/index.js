@@ -13,7 +13,11 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Configure CORS
-app.use(cors());
+app.use(cors({
+  origin: 'https://halal-bro-shop.vercel.app', // Your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://mdeconozzama:UFyGpfTmxCEVKHrU@cluster0.7fkqi.mongodb.net/database?retryWrites=true&w=majority&appName=Cluster0', {
