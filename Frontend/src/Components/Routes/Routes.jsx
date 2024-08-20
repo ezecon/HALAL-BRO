@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Home from "../../Pages/Customer/Home";
 import HomeAdmin from "../../Pages/Admin/Home";
 import Products from "../Products/Products";
@@ -75,6 +75,10 @@ const router = createBrowserRouter([
             {
                 path:'orders',
                 element:<Orders/>
+            },
+            {
+                path: 'products',
+                element: <Navigate to="/admin" />, // Redirect to the product list page
             },
 
         ]

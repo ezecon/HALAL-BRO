@@ -88,10 +88,10 @@ export default function Navbar() {
               />
             </MenuHandler>
             <MenuList>
-              <MenuItem>Profile</MenuItem>
+              <Link to="profile"><MenuItem>Profile</MenuItem></Link>
               <MenuItem onClick={handleOpen}>Upload</MenuItem>
-              <MenuItem>Products</MenuItem>
-              <MenuItem>About</MenuItem>
+              <Link to="products"><MenuItem>Products</MenuItem></Link>
+             <Link to="order"> <MenuItem>Orders</MenuItem></Link>
               <MenuItem onClick={temp}>Logout</MenuItem>
             </MenuList>
           </Menu>
@@ -105,9 +105,9 @@ export default function Navbar() {
             >
               Upload
             </h1>
-            <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">
+            <Link to="products"><h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">
               Products
-            </h1>
+            </h1></Link>
             <Link to="orders">
             <h1 className="text-white montserrat-alternates-light cursor-pointer hover:text-[green]">
               Orders

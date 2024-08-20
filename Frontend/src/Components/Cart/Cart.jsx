@@ -15,6 +15,7 @@ import {
   Option,
 } from "@material-tailwind/react";
 import ComNavbar from "../Layoout/CommonNavbar/ComNavbar";
+import { useNavigate } from "react-router-dom";
  
 
 export default function Cart() {
@@ -26,7 +27,7 @@ export default function Cart() {
   const [number, setNumber] = useState('');
   const [address, setAddress] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
-
+  const navigate = useNavigate()
   const handleNumberChange = (e) => {
     setNumber(e.target.value);
   };
@@ -47,6 +48,7 @@ export default function Cart() {
         const response = await axios.get('http://localhost:3000/api/v2/auth/user-info', { withCredentials: true });
         setUserID(response.data.user.id);
       } catch (error) {
+        navigate(`/login`)
         console.log(error);
       } finally {
         setLoading(false);
