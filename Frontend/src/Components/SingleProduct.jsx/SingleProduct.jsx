@@ -63,6 +63,7 @@ export default function SingleProduct() {
                         <p className='text-white font-bold new-amsterdam-regular text-2xl'>{data.price} ৳</p>
                     </div>
                     <div className='bg-white w-full h-full flex flex-col justify-center items-center'>
+                       <h1 className="heading text-3xl mt-10 rounded-xl p-3 font-bold common border border-[#00800052]">{data.status}</h1>
                         <details className="group w-full max-w-lg py-10">
                             <summary className="mx-5 cursor-pointer bg-gradient-to-r from-green-500 to-[#c9de71] text-white px-6 py-3 rounded-md text-lg font-semibold flex justify-between items-center">
                                 Product Description

@@ -45,7 +45,7 @@ export default function Cart() {
     const fetchUser = async () => {
       try {
         // Attempt to fetch user info from backend
-        const response = await axios.get('http://localhost:3000/api/v2/auth/user-info', { withCredentials: true });
+        const response = await axios.get('https://halal-bro-server.vercel.app/api/v2/auth/user-info', { withCredentials: true });
         setUserID(response.data.user.id);
       } catch (error) {
         navigate(`/login`)
@@ -66,7 +66,7 @@ export default function Cart() {
   useEffect(() => {
     const fetchCarts = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/v2/carts/${userID}`);
+        const res = await axios.get(`https://halal-bro-server.vercel.app/api/v2/carts/${userID}`);
         if (res.status === 200) {
           setData(res.data);
         }
@@ -83,7 +83,7 @@ export default function Cart() {
 
   const handleSingleDelete = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3000/api/v2/carts/single/${id}`);
+      const response = await axios.delete(`https://halal-bro-server.vercel.app/api/v2/carts/single/${id}`);
 
       if (response.status === 200) {
         toast.success("Item Deleted!");
@@ -97,7 +97,7 @@ export default function Cart() {
   
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:3000/api/v2/carts/${userID}`);
+      const response = await axios.delete(`https://halal-bro-server.vercel.app/api/v2/carts/${userID}`);
 
       if (response.status === 200) {
         toast.success("Item Deleted!");
@@ -116,7 +116,7 @@ export default function Cart() {
 
     try {
         console.log(`Updating item with ID: ${id} to amount: ${newAmount}`);
-        const response = await axios.put(`http://localhost:3000/api/v2/carts/single/${id}`, {
+        const response = await axios.put(`https://halal-bro-server.vercel.app/api/v2/carts/single/${id}`, {
             amount: newAmount,
         });
 
@@ -139,7 +139,7 @@ export default function Cart() {
 const handleSizeChange = async (id, newSize) => {
     try {
         console.log(`Updating item with ID: ${id} to size: ${newSize}`);
-        const response = await axios.put(`http://localhost:3000/api/v2/carts/single1/${id}`, {
+        const response = await axios.put(`https://halal-bro-server.vercel.app/api/v2/carts/single1/${id}`, {
             size: newSize,
         });
 
@@ -179,7 +179,7 @@ const handleSizeChange = async (id, newSize) => {
         return;
       }
       try {
-        const response = await axios.post(`http://localhost:3000/api/v2/orders/`,{
+        const response = await axios.post(`https://halal-bro-server.vercel.app/api/v2/orders/`,{
           userId: userID,
           items: data,
           address,

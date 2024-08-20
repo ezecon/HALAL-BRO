@@ -21,7 +21,7 @@ export default function Navbar() {
     const fetchUser = async () => {
       try {
         // Attempt to fetch user info from backend
-        const response = await axios.get('http://localhost:3000/api/v2/auth/user-info', { withCredentials: true });
+        const response = await axios.get('https://halal-bro-server.vercel.app/api/v2/auth/user-info', { withCredentials: true });
         setUserID(response.data.user);
       } catch (error) {
         console.log(error);
@@ -37,7 +37,7 @@ export default function Navbar() {
     const fetchUserInfo = async () => {
       if (userID && userID.id) { // Ensure userID and userID.id are not null
         try {
-          const response = await axios.get(`http://localhost:3000/api/v2/users/${userID.id}`);
+          const response = await axios.get(`https://halal-bro-server.vercel.app/api/v2/users/${userID.id}`);
           if (response.status === 200) {
             setUserInfo(response.data.item);
             console.log(response.data.item); // Make sure to log the response data
@@ -57,7 +57,7 @@ export default function Navbar() {
 
 const handleLogout = async () => {
   try {
-      await axios.post('http://localhost:3000/api/v2/auth/logout', {}, { withCredentials: true });
+      await axios.post('https://halal-bro-server.vercel.app/api/v2/auth/logout', {}, { withCredentials: true });
       navigate('/login');
   } catch (error) {
       console.error('Logout failed:', error);
