@@ -130,7 +130,7 @@ router.post('/google-signin', async (req, res) => {
 // Route to retrieve user info
 router.get('/user-info', (req, res) => {
   const token = req.cookies.token;
-
+  console.log(token)
   if (!token) {
     return res.status(401).json({ msg: 'No token provided' });
   }
