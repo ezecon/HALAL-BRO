@@ -23,7 +23,7 @@
     font-weight: 200;
     font-style: normal;
   }
-  
+   
   .montserrat-alternates-light {
     font-family: "Montserrat Alternates", sans-serif;
     font-weight: 300;
@@ -282,43 +282,60 @@
   animation: rightanimation 2s ease-in-out both;
   animation-timeline: view(90% 10%);
 }
-/*image slider*/
-.image-slider {
-  overflow: hidden;
-  width: 100%;
-  position: relative;
-}
-
-.slider-wrapper {
+.gallery-body{
   display: flex;
-  width: calc(200%);
-  animation: slide 20s linear infinite;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  background: #00000000;
 }
 
-.slider-image {
-  flex: 0 0 auto;
-  width: 25%;
-  max-width: 200px;
-  margin-right: 15px;
-  border-radius: 25px;
+.gallery{
+  position: relative;
+  width: 300px;
+  height: 200px;
+  transform-style: preserve-3d;
+  animation: animate 30s linear  infinite;
+  animation-play-state: running;
+}
+
+@keyframes animate {
+  0%{
+      transform: perspective(1000px) rotateY(0deg);
+  }
+  100%{
+      transform: perspective(1000px) rotateY(360deg);
+  }
+}
+
+.gallery:hover{
+  animation-play-state: paused;
+}
+
+.gallery span{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transform: rotateY(calc(var(--i) * 36deg)) translateZ(400px);
+  -webkit-box-reflect: below 0px linear-gradient(transparent,transparent,#0004);
+}
+
+.gallery span img{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  border-radius: 10px;
   object-fit: cover;
+  cursor: pointer;
 }
 
-@keyframes slide {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
 
-@media (max-width: 768px) {
-  .slider-image {
-    width: 50%;
-    margin-right: 10px;
-  }
-}
 
 .loader {
   transform: rotateZ(45deg);

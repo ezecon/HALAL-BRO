@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://halal-bro-server.vercel.app/api/v2/auth';
+const API_URL = 'http://localhost:3000/api/v2/auth';
 
 // Register user
 export const registerUser = async (email, password, displayName) => {
