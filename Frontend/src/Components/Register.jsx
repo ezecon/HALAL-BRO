@@ -1,53 +1,80 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { registerUser } from "./../services/authService";
 import toast from "react-hot-toast";
 import { Button, Input } from "@material-tailwind/react";
-import { auth, provider } from './../firebase/firebase'; // Adjust path as necessary
+import emailjs from 'emailjs-com';
 import axios from "axios";
-import { signInWithPopup } from 'firebase/auth';
-import { FcGoogle } from "react-icons/fc";
-
 
 
 const Register = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [displayName, setDisplayName] = useState("");
+  const [name, setDisplayName] = useState("");
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [number, setNumber] = useState('');
+  const [password, setPassword] = useState('');
+  
 
-  const handleGoogleLogin = async () => {
-    try {
-        const result = await signInWithPopup(auth, provider);
-        const idToken = await result.user.getIdToken();
-
-        // Send token to your backend
-        const response = await axios.post('http://localhost:3000/api/v2/auth/google-signin', {
-            idToken,
-        }, { withCredentials: true }); // Ensure credentials are included
-        
-
-        // Handle successful login
-        toast.success('Login successful');
-        const { uid } = response.data;
-        console.log("Google UID:", uid);
-        navigate("/");
-
-    } catch (error) {
-        console.error("Google login failed:", error);
-        toast.error('Google login failed');
-    }
+  const getRandomChoice = () => {
+    const minimum = 100000;
+    const maximum = 999999;
+    const randomIndex = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+    return randomIndex;
 };
-//
-  const handleRegister = async (e) => {
-    e.preventDefault();
+
+const handleSignUp = (code) => {
+  emailjs.send(
+    'service_cg57hsm',
+    'template_912hg7n',
+    {
+      message: code,
+      user_email: email,
+      user_name: name,
+    },
+    'HPOXU5yUUILTLU-HM'
+  )
+  .then((response) => {
+    
+    toast.success("Message Sent!");
+    console.log('Email sent successfully!', response.status, response.text);
+  })
+  .catch((err) => {
+    console.error('Failed to send email. Error:', err);
+  });
+  navigate('/verify', {
+    state: { userEmail: email }
+  });
+
+
+};
+
+const handleSubmit = async (event) => {
+    event.preventDefault();
+    const code = getRandomChoice();
+    const newUser = {
+      name: name,
+      email: email,
+      number:number,
+      password: password,
+      verificationCode: code,
+    }; 
+  
     try {
-      await registerUser(email, password, displayName);
-      toast.success("Registered successfully!");
-      navigate("/login");
-    } catch (err) {
-      toast.error(err.msg || "Failed to register");
+      const response = await axios.post(`http://localhost:3000/api/v2/auth/register`, newUser);
+      
+      if (response.data.error) {
+        toast.error(response.data.error);
+      } else {
+        toast.success("Registration successful!");
+      } 
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        toast.error(error.response.data.error);
+      } else {
+        console.error('Error registering:', error);
+        toast.error("Registration failed. Please try again.");
+      }
     }
+    handleSignUp(code);
   };
 
   return (
@@ -66,6 +93,26 @@ const Register = () => {
               <div className="w-96 h-96 border border-gray-300 p-6 sm:p-10 flex flex-col justify-center items-center gap-y-5">
                   <h1 className="text-lg sm:text-xl mb-4 montserrat-alternates-bold">Sign In</h1>
                   <form className="text-center flex flex-col justify-center items-center gap-y-4">
+                  <div className="w-72 max-w-xs sm:max-w-sm">
+                      <Input
+                        type="text"
+                        placeholder="Display Name"
+                        value={name}
+                        onChange={(e) => setDisplayName(e.target.value)}
+                         className="border text-gray-500  border-gray-300 rounded-md p-2 mb-4 w-full"
+
+                      />
+                    </div>
+                    <div className="w-72 max-w-xs sm:max-w-sm">
+                      <Input
+                        type="text"
+                        placeholder="Display Name"
+                        value={number}
+                        onChange={(e) => setNumber(e.target.value)}
+                         className="border text-gray-500  border-gray-300 rounded-md p-2 mb-4 w-full"
+
+                      />
+                    </div>
                       <div className="text-gray-500  w-72 max-w-xs sm:max-w-sm">
                           <Input
                               type="email"
@@ -75,16 +122,7 @@ const Register = () => {
                               className="border text-gray-500  border-gray-300 rounded-md p-2 mb-4 w-full"
                           />
                       </div>
-                      <div className="w-72 max-w-xs sm:max-w-sm">
-                      <Input
-                        type="text"
-                        placeholder="Display Name"
-                        value={displayName}
-                        onChange={(e) => setDisplayName(e.target.value)}
-                         className="border text-gray-500  border-gray-300 rounded-md p-2 mb-4 w-full"
-
-                      />
-                    </div>
+                     
                     <div className="text-gray-500  w-72 max-w-xs sm:max-w-sm">
                     <Input
                         type="password"
@@ -95,14 +133,11 @@ const Register = () => {
      
                       />
                     </div>
-                      <Button onClick={handleRegister} className=" mt-4">
+                      <Button onClick={handleSubmit} className=" mt-4">
                           Register
                       </Button>
                   </form>
-                  <div className='flex flex-col justify-center items-center'>
-                    <FcGoogle onClick={handleGoogleLogin} className='text-3xl'/>
-                    <p className='montserrat-alternates-light  text-sm'>with google?</p>
-                </div>
+  
               </div>
           </div>
   </div>

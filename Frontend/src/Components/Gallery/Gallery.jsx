@@ -13,20 +13,29 @@ export default function Gallery() {
     { id: 7, src: '9.jpg', alt: 'Image 7' },
     { id: 8, src: '10.jpg', alt: 'Image 8' }
   ];
+   const sliderStyle = {
+    '--width': '100px',
+    '--height': '50px',
+    '--quantity': images.length
+  };
   return (
     <div className="my-24">
       <h1 className="checkcursor heading new-amsterdam-regular text-6xl text-center mb-8">
         Gallery
       </h1>
-      <div className="gallery-body flex justify-center items-center gap-6">
-     <div className="gallery">
-      {images.map((image, index) => (
-        <span key={image.id} style={{ '--i': index + 1 }}>
-          <img src={image.src} alt={image.alt} />
-        </span>
-      ))}
+      <div className="slider" style={sliderStyle}>
+      <div className="list">
+        {images.map((image, index) => (
+          <div
+            className="item"
+            key={index}
+            style={{ '--position': index + 1 }}
+          >
+            <img src={`images/${image}`} alt={`Slide ${index + 1}`} />
+          </div>
+        ))}
+      </div>
     </div>
-     </div>
     </div>
   );
 }

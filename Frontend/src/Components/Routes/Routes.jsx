@@ -12,6 +12,8 @@ import Register from "../Register";
 import Developer from "../Developer/Developer";
 import { Orders } from "../../Pages/Admin/Orders/Orders";
 import { Dashboard } from "../../Pages/Customer/Dashboard/Dashboard";
+import Information from "../../Pages/Information/Information";
+import Verify from "../../Pages/Verify/Verify";
 
 
 const router = createBrowserRouter([
@@ -59,6 +61,22 @@ const router = createBrowserRouter([
     {
         path: "/register",
         element: <Register />,
+    }
+    ,
+    {
+        path: 'verify/information',
+        element: <Information/>
+    }
+
+    ,
+    {
+        path: '/verify',
+        element: <Verify/>
+    }
+    ,
+    {
+        path: '*',
+        element: <div>404 Not Found</div>
     },
     {
         path: "/admin",

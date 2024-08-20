@@ -2,15 +2,51 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  uid: { type: String, required: false }, // Firebase UID
-  email: { type: String, required: true, unique: true },
-  displayName: { type: String, required: false },
-  address: { type: String, required: false },
-  district: { type: String, required: false },
-  number: { type: String, required: false },
-  image: { type: String, required: false },
-  password: { type: String, required: false }, 
-  googleId: { type: String, required: false }, 
+  email: 
+  { 
+    type: String, 
+    required: true, 
+    unique: true 
+  },
+  name: 
+  { 
+    type: String, 
+    required: false 
+  },
+  role:{
+    type: String,
+    default: "Customer"
+},
+  address: { 
+    type: String, 
+    required: false 
+  },
+  district: 
+  { 
+    type: String, 
+    required: false 
+  },
+  number: { 
+    type: String, 
+    required: false 
+  },
+  image: 
+  { 
+    type: String, 
+    required: false
+   },
+  password: { 
+    type: String, 
+    required: false
+   }, 
+  isVerified: { 
+    type: Boolean, 
+    default: false 
+},
+verificationCode: { 
+    type: String ,
+    required: true
+},
   date:{type: Date, default: Date.now}
 });
 

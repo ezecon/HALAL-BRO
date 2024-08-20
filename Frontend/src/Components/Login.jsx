@@ -1,44 +1,19 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { signInWithPopup } from 'firebase/auth';
-import { auth, provider } from './../firebase/firebase'; // Adjust path as necessary
+import { useState } from 'react';// Adjust path as necessary
 import { Button, Input } from '@material-tailwind/react';
-import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleGoogleLogin = async () => {
-        try {
-            const result = await signInWithPopup(auth, provider);
-            const idToken = await result.user.getIdToken();
-
-            // Send token to your backend
-            const response = await axios.post('http://localhost:3000/api/v2/auth/google-signin', {
-                idToken,
-            }, { withCredentials: true }); // Ensure credentials are included
-            
-
-            // Handle successful login
-            toast.success('Login successful');
-            const { uid } = response.data;
-            console.log("Google UID:", uid);
-            navigate("/");
-
-        } catch (error) {
-            console.error("Google login failed:", error);
-            toast.error('Google login failed');
-        }
-    };
 
     const handleEmailPasswordLogin = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:3000/api/v2/auth/login', {
+            await axios.post('http://localhost:3000/api/v2/auth-login', {
                 email,
                 password,
             }, { withCredentials: true }); // Include credentials in the request
@@ -88,10 +63,7 @@ const Login = () => {
                             Login
                         </Button>
                     </form>
-                    <div className='flex flex-col justify-center items-center'>
-                        <FcGoogle onClick={handleGoogleLogin} className='text-3xl' />
-                        <p className='montserrat-alternates-light text-sm'>with Google?</p>
-                    </div>
+                   
                 </div>
             </div>
         </div>

@@ -4,10 +4,11 @@ import { CiSearch } from "react-icons/ci";
 import { CgDetailsMore } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useToken } from "../../Hook/useToken";
 
 export default function Navbar() {
   const [displayComponent, setDisplayComponent] = useState(null); // State to hold the rendered component
-
+  const { token, removeToken } = useToken();
   const [openRight, setOpenRight] = useState(false)
   const openDrawerRight = () => setOpenRight(true);
   const closeDrawerRight = () => setOpenRight(false);
@@ -15,43 +16,46 @@ export default function Navbar() {
   const navigate = useNavigate();
   const [userID, setUserID] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const verifyToken = async () => {
+
       try {
-        // Attempt to fetch user info from backend
-        const response = await axios.get('https://halal-bro-server.vercel.app/api/v2/auth/user-info', { withCredentials: true });
-        setUserID(response.data.user);
+        const response = await axios.post('https://halal-bro-server.vercel.app/api/v2/auth/user-info', { token });
+        if (response.status === 200 && response.data.valid) {
+          setUserID(response.data.decoded.id);
+        } else {
+          removeToken();
+        }
       } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
+        console.error('Error verifying token:', error);
+        removeToken();
       }
     };
-  
-    fetchUser();
-  }, []); // Empty dependency array to run only on component mount
-  
+
+    verifyToken();
+  }, [token, navigate, removeToken]);
+
   useEffect(() => {
     const fetchUserInfo = async () => {
-      if (userID && userID.id) { // Ensure userID and userID.id are not null
+      if (userID) {
         try {
-          const response = await axios.get(`https://halal-bro-server.vercel.app/api/v2/users/${userID.id}`);
+          const response = await axios.get(`https://halal-bro-server.vercel.app/api/v2/users/${userID}`);
           if (response.status === 200) {
-            setUserInfo(response.data.item);
-            console.log(response.data.item); // Make sure to log the response data
+            setUserInfo(response.data);
           } else {
             console.log(response.data);
           }
         } catch (err) {
-          console.error(err);
+          console.error('Error fetching user info:', err);
         }
       }
     };
-  
-    fetchUserInfo();
-  }, [userID]); // Dependency array includes userID
+
+    if (userID) {
+      fetchUserInfo();
+    }
+  }, [userID]);
   
 
 
@@ -63,11 +67,6 @@ const handleLogout = async () => {
       console.error('Logout failed:', error);
   }
 };
-if(loading){
-  <div className="flex flex-col justify-center items-center h-screen bg-black gap-y-4">
-       <span className="loader"></span>
-      </div>
-}
 
 
   useEffect(() => {

@@ -1,156 +1,204 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const admin = require('../Config/firebase'); // Ensure Firebase Admin SDK is properly initialized
-const User = require('../models/user'); // Adjust the path to your User model
+const User = require('../models/user'); 
 const router = express.Router();
+const cloudinary = require('../Cloudinary.js');
+const multer = require('multer');
 
-const secretKey = 'MeghEcon'; // Make sure this matches your JWT secret
+// Multer setup
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
-// Register a new user
+// Create a user 
 router.post('/register', async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password, number,  verificationCode } = req.body;
 
   try {
-    // Check if the user already exists
-    let user = await User.findOne({ email });
-    if (user) {
-      return res.status(400).json({ msg: 'User already exists' });
-    }
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+          return res.status(400).json({ error: 'Email already in use' });
+      }
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 12);
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user
-    user = new User({
-      email,
-      password: hashedPassword,
-    });
-
-    await user.save();
-
-    // Generate a JWT token with id and email
-    const payload = {
-      user: {
-        id: user._id,
-        email: user.email, // Add email to the payload     
-      },
-    };
-
-    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
-
-    // Set the token in an HTTP-only cookie
-    res.cookie('token', token, { httpOnly: true, maxAge: 3600000 });
-
-    res.json({ msg: 'Registration successful' });
-  } catch (error) {
-    res.status(500).send('Server error');
-  }
-});
-
-// Login with Email/Password
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    // Check if the user exists in MongoDB
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ msg: 'Invalid Credentials' });
-    }
-
-    // Compare the provided password with the stored hashed password
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ msg: 'Invalid Credentials' });
-    }
-
-    // Generate a JWT token with id and email
-    const payload = {
-      user: {
-        id: user._id,
-        email: user.email, // Add email to the payload
-      },
-    };
-
-    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
-
-    // Set the token in an HTTP-only cookie
-    res.cookie('token', token, { httpOnly: true, maxAge: 3600000 });
-
-    res.json({ msg: 'Login successful' });
-  } catch (error) {
-    res.status(500).send('Server error');
-  }
-});
-
-// Google Sign-In
-router.post('/google-signin', async (req, res) => {
-  const { idToken } = req.body;
-
-  try {
-    // Verify the ID token with Firebase
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
-    const { uid, email, name } = decodedToken;
-
-    // Check if the user exists in MongoDB
-    let user = await User.findOne({ uid });
-    
-    if (!user) {
-      // If the user doesn't exist, create a new one
-      user = new User({
-        uid,
-        email,
-        displayName: name,
+      const user = new User({
+          name,
+          email,
+          password: hashedPassword,
+          number,
+          verificationCode,
+  
+          isVerified: false
       });
 
-      await user.save();
-    }
-
-    // Generate a JWT token with id and email
-    const payload = {
-      user: {
-        id: user._id,
-        email: user.email, // Add email to the payload
-      },
-    };
-
-    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
-
-    // Set the token in an HTTP-only cookie
-    res.cookie('token', token, { httpOnly: true, maxAge: 3600000 });
-
-    // Return the Google UID
-    res.json({ msg: 'Login successful', uid: user.uid });
-  } catch (error) {
-    res.status(400).send('Invalid Google ID Token');
+      const newUser = await user.save();
+      res.status(201).json(newUser);
+  } catch (err) {
+      res.status(400).json({ message: err.message });
   }
 });
-
-// Route to retrieve user info
-router.get('/user-info', (req, res) => {
-  const token = req.cookies.token;
-  console.log(token)
-  if (!token) {
-    return res.status(401).json({ msg: 'No token provided' });
-  }
-
-  jwt.verify(token, secretKey, (err, decoded) => {
-    if (err) {
-      return res.status(403).json({ msg: 'Token is not valid' });
-    }
-
-    res.json({ user: decoded.user });
-  });
-});
-// In your server-side routes file (e.g., routes/auth.js)
-router.post('/logout', (req, res) => {
+// Get all users
+router.get('/', async (req, res) => {
     try {
-        // Clear the token cookie
-        res.clearCookie('token');
-        res.json({ msg: 'Logout successful' });
+        const users = await User.find();
+        res.json(users);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
+// Get user by ID
+router.get('/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// Verify user by email
+router.get('/verify/:userEmail', async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.params.userEmail });
+        if (user) {
+            res.status(200).json({
+                isVerified: user.isVerified,
+                verificationCode: user.verificationCode
+            });
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
     } catch (error) {
-        res.status(500).json({ msg: 'Server error' });
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
+
+// Update verification status**********************************
+router.put('/verify', async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).json({ message: 'Email is required' });
+        }
+        const user = await User.findOneAndUpdate(
+            { email },
+            { isVerified: true },
+            { new: true }
+        );
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// Update user by email (without photo)********
+router.put('/update', upload.single('photo'), async (req, res) => {
+    const { 
+        email, 
+        division,
+        upazilas,
+        zipCode,
+        district,
+        country,
+        address
+    } = req.body;
+
+    let photoUrl = null;
+
+    try {
+        if (!email) {
+            return res.status(400).json({ error: 'Email is required.' });
+        }
+
+        // Handle photo upload if present
+        if (req.file) {
+            const result = await new Promise((resolve, reject) => {
+                cloudinary.uploader.upload_stream({ resource_type: 'image' }, (error, result) => {
+                    if (error) reject(error);
+                    else resolve(result);
+                }).end(req.file.buffer);
+            });
+
+            photoUrl = result.secure_url;
+        }
+
+        const updateData = {
+            division,
+            upazilas,
+            zipCode,
+            district,
+            country,
+            address
+        };
+
+        if (photoUrl) {
+            updateData.photo = photoUrl;
+        }
+
+        const updatedUser = await User.findOneAndUpdate({ email }, updateData, { new: true });
+
+        if (!updatedUser) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        res.status(200).json({ message: 'User updated successfully.', user: updatedUser });
+    } catch (error) {
+        console.error('Error updating user:', error);
+        res.status(500).json({ error: 'Server error. Please try again.' });
+    }
+});
+
+
+
+router.put('/profile/:id', upload.single('photo'), async (req, res) => {
+    try {
+        const { name, email, number, city, zipCode, district, country, address } = req.body;
+        let photoUrl = null;
+
+        // Find the user and update profile
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json({ success: false, msg: 'User not found' });
+        }
+
+        // Upload photo to Cloudinary if present
+        if (req.file) {
+            const result = await new Promise((resolve, reject) => {
+                cloudinary.uploader.upload_stream({ resource_type: 'image' }, (error, result) => {
+                    if (error) reject(error);
+                    else resolve(result);
+                }).end(req.file.buffer);
+            });
+
+            photoUrl = result.secure_url;
+        }
+
+        user.name = name || user.name;
+        user.email = email || user.email;
+        user.number = number || user.number;
+        user.city = city || user.city;
+        user.zipCode = zipCode || user.zipCode;
+        user.district = district || user.district;
+        user.country = country || user.country;
+        user.address = address || user.address;
+
+        if (photoUrl) {
+            user.photo = photoUrl;
+        }
+
+        await user.save();
+        res.send({ success: true, msg: 'Profile updated successfully', user });
+    } catch (err) {
+        console.error('Error during profile update:', err);
+        res.status(500).send({ success: false, msg: 'Database error', err });
     }
 });
 

@@ -36,6 +36,12 @@ app.use('/api/v2/products', product);
 const authRoutes = require('./routes/auth');
 app.use('/api/v2/auth', authRoutes);
 
+const authLogin = require('./Verification/Auth.js');
+app.use('/api/v2/auth-login', authLogin);
+
+const authVerify = require('./Verification/verifytoken.js');
+app.use('/api/v2/auth/user-info', authVerify);
+
 const user = require('./routes/User.js');
 app.use('/api/v2/users', user);
 
