@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../../Components/Layoout/Navbar/Navbar";
 import { useToken } from "../../../Components/Hook/useToken";
 import toast from "react-hot-toast";
-import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, Input, Rating } from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 
 export function Dashboard() {
   const [data, setData] = useState([]);
@@ -13,9 +13,7 @@ export function Dashboard() {
   const { token } = useToken();
   const [userID, setUserID] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(false);
- 
-  const handleOpen = () => setOpen(!open);
+  
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -62,7 +60,6 @@ export function Dashboard() {
         setData(prevData => prevData.map(order => 
           order._id === orderId ? { ...order, status: 'Delivered' } : order
         ));
-        handleOpen()
       }
     } catch (error) {
       console.log(error);
@@ -122,7 +119,6 @@ export function Dashboard() {
   }
 
   return (
-
     <div className="bg-gradient-to-r from-green-500 to-[#c9de71] w-full h-full">
       <Navbar />
       <div className="py-10 flex flex-col justify-center items-center">
@@ -183,30 +179,6 @@ export function Dashboard() {
           ))}
         </div>
       </div>
-      <>
-      <Dialog open={open} handler={handleOpen}>
-        <DialogHeader>Its a simple dialog.</DialogHeader>
-        <DialogBody>
-        <Rating value={5} />;
-        <div className="w-72">
-          <Input type="text" value={review}/>
-        </div>
-        </DialogBody>
-        <DialogFooter>
-          <Button
-            variant="text"
-            color="red"
-            onClick={handleOpen}
-            className="mr-1"
-          >
-            <span>Cancel</span>
-          </Button>
-          <Button variant="gradient" color="green" onClick={handleOpen}>
-            <span>Confirm</span>
-          </Button>
-        </DialogFooter>
-      </Dialog>
-    </>
     </div>
   );
 }
