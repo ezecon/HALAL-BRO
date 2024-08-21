@@ -78,7 +78,7 @@ export default function ComNavbar() {
            <>
             <Menu>
             <MenuHandler>
-                <Avatar src="/1.jpg" className=" border-green-600 border-2 cursor-pointer" size="md" />
+                <Avatar src={userInfo && userInfo.image} className=" border-green-600 border-2 cursor-pointer" size="md" />
             </MenuHandler>
             <MenuList>
               <Link to="/profile"><MenuItem>Profile</MenuItem></Link>

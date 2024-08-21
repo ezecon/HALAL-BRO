@@ -48,8 +48,8 @@ export default function Profile() {
         try {
           const response = await axios.get(`https://halal-bro-server.vercel.app/api/v2/users/${userID}`);
           if (response.status === 200) {
-            setUserInfo(response.data.item);
-            console.log(response.data.item);
+            setUserInfo(response.data.user);
+            console.log(response.data.user);
           } else {
             console.log(response.data);
           }
@@ -94,7 +94,7 @@ export default function Profile() {
         <div className="bg-white rounded-xl w-full h-full flex flex-col justify-center items-center text-center">
           <img className="w-36 rounded-xl hero-loop mb-5" src={userInfo?.image || defaultImage} alt="Profile Picture" />
           {isEditing ? (
-            <div className="px-5">
+            <div className="px-5 flex flex-col justify-center items-center gap-y-4">
               <Input
                 name="name"
                 value={userInfo.name}

@@ -1,14 +1,78 @@
 import { TbManFilled } from "react-icons/tb";
 import ComNavbar from '../Layoout/CommonNavbar/ComNavbar'
 import { FaOpencart } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
+import { useToken } from "../Hook/useToken";
 
 export default function SingleProduct() {
     const { id } = useParams();
     const [data, setData] = useState(null); // Initialized to null to handle loading state
     const [error, setError] = useState(null);
+    const { token } = useToken();
+  const navigate = useNavigate();
+  const [userID, setUserID] = useState(null);
+  const [size, setSize] = useState(null);
+
+  const handleSize = (e) => {
+    setSize(e);
+  };
+
+  useEffect(() => {
+    const verifyToken = async () => {
+      try {
+        const response = await axios.post('https://halal-bro-server.vercel.app/api/v2/auth-user-info', { token });
+        if (response.status === 200 && response.data.valid) {
+          setUserID(response.data.decoded.id);
+          console.log(userID)
+        } else {
+          console.log("Something went wrong");
+        }
+      } catch (error) {
+        console.error('Error verifying token:', error);
+      }
+    };
+
+    verifyToken();
+  }, [token]);
+
+ 
+
+  const handleCart = async () => {
+    if (!userID) {
+      toast.error("Please log in first.");
+      return;
+    }
+
+    try {
+      const productResponse = await axios.get(`https://halal-bro-server.vercel.app/api/v2/products/${_id}`);
+     // console.log(productResponse.data.data)
+      if (productResponse.status === 200 && productResponse.data.data.status === "Available") {
+        const cartResponse = await axios.post('https://halal-bro-server.vercel.app/api/v2/carts', {
+          name:data.name,
+          productId: data._id,
+          image:data.image,
+          price:data.price,
+          userId: userID,
+          size: size,
+          amount: 1
+        });
+        if (cartResponse.status === 200) {
+          toast.success("Added to Cart!");
+        } else {
+          toast.error("Failed to add to cart.");
+        }
+      } else {
+        toast.error("Product not available.");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong.");
+    }
+  };
+
 
     useEffect(() => {
         const fetchItem = async () => {
@@ -85,27 +149,27 @@ export default function SingleProduct() {
                         <div className="mydict">
                             <div>
                                 <label>
-                                    <input type="radio" name="radio" defaultChecked />
+                                    <input value='S' onChange={handleSize} type="radio" name="radio" defaultChecked />
                                     <span>S</span>
                                 </label>
                                 <label>
-                                    <input type="radio" name="radio" />
+                                    <input value='M' onChange={handleSize} type="radio" name="radio" />
                                     <span>M</span>
                                 </label>
                                 <label>
-                                    <input type="radio" name="radio" />
+                                    <input value='L' onChange={handleSize} type="radio" name="radio" />
                                     <span>L</span>
                                 </label>
                                 <label>
-                                    <input type="radio" name="radio" />
+                                    <input value='XL' onChange={handleSize} type="radio" name="radio" />
                                     <span>XL</span>
                                 </label>
                                 <label>
-                                    <input type="radio" name="radio" />
+                                    <input value='XXL' onChange={handleSize} type="radio" name="radio" />
                                     <span>XXL</span>
                                 </label>
                                 <label>
-                                    <input type="radio" name="radio" />
+                                    <input value='XXXL' onChange={handleSize} type="radio" name="radio" />
                                     <span>XXXL</span>
                                 </label>
                             </div>
@@ -116,10 +180,10 @@ export default function SingleProduct() {
                             <p className="text-xl p-2">+</p>
                         </div>
                         <div className="">
-                            <a href="#"
+                            <p  onClick={handleCart}
                                 className="flex gap-2 my-5 bg-white no-underline py-3 px-6 rounded-full shadow-lg font-medium text-[#1e6b7b] transition duration-[0.25s] hover:tracking-wider">
                                 Add To Cart  <FaOpencart className="text-black" />
-                            </a>
+                            </p>
                         </div>
                     </div>
                 </div>
