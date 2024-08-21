@@ -58,7 +58,7 @@ export default function Navbar() {
     const fetchUserInfo = async () => {
       if (userID) {
         try {
-          const response = await axios.get(`https://halal-bro-server.vercel.app/pi/v2/users/${userID}`);
+          const response = await axios.get(`https://halal-bro-server.vercel.app/api/v2/users/${userID}`);
           if (response.status === 200) {
             setUserInfo(response.data.item);
           } else {
