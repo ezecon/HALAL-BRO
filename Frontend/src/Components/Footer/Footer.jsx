@@ -6,6 +6,7 @@ export default function Footer() {
       <div className="flex flex-col md:flex-row items-center justify-around">
         <div className="text-center md:text-left mb-4 md:mb-0 hero-left-1">
           <h1 className="text-white font-bold text-4xl">HALAL BRO</h1>
+         <div className="flex justify-center py-3"> <img src="logo/logo.jpg" className="w-14 rounded-full" alt="Logo" /></div>
           <div className="flex justify-center md:justify-start gap-4 mt-2">
             <p className="text-white montserrat-alternates-light gradient">About</p>
             <p className="text-white montserrat-alternates-light gradient">Contact</p>

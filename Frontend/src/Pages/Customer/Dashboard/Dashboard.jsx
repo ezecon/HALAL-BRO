@@ -4,6 +4,7 @@ import { MdBorderColor } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../../Components/Layoout/Navbar/Navbar";
 import { useToken } from "../../../Components/Hook/useToken";
+import toast from "react-hot-toast";
 
 export function Dashboard() {
   const [data, setData] = useState([]);
@@ -65,6 +66,7 @@ export function Dashboard() {
     try {
       const response = await axios.delete(`https://halal-bro-server.vercel.app/api/v2/orders/${orderId}`);
       if (response.status === 200) {
+        toast.success("Order Deleted!")
         setData(prevData => prevData.filter(order => order._id !== orderId));
       }
     } catch (error) {
@@ -99,7 +101,7 @@ export function Dashboard() {
   }
 
   return (
-    <div className="bg-gradient-to-r from-green-500 to-[#c9de71] w-full h-full fixed">
+    <div className="bg-gradient-to-r from-green-500 to-[#c9de71] w-full h-full">
       <Navbar />
       <div className="py-10 flex flex-col justify-center items-center">
         <h1 className="m-3 text-2xl text-white font-bold montserrat-alternates-nice pt-20 flex justify-center gap-2">

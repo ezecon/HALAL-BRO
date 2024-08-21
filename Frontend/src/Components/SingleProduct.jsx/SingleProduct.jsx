@@ -1,5 +1,5 @@
 import { TbManFilled } from "react-icons/tb";
-import ComNavbar from '../Layoout/CommonNavbar/ComNavbar'
+import ComNavbar from '../Layoout/CommonNavbar/ComNavbar';
 import { FaOpencart } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -12,67 +12,74 @@ export default function SingleProduct() {
     const [data, setData] = useState(null); // Initialized to null to handle loading state
     const [error, setError] = useState(null);
     const { token } = useToken();
-  const navigate = useNavigate();
-  const [userID, setUserID] = useState(null);
-  const [size, setSize] = useState(null);
+    const navigate = useNavigate();
+    const [userID, setUserID] = useState(null);
+    const [size, setSize] = useState('S');
+    const [amount, setAmount] = useState(1);
 
-  const handleSize = (e) => {
-    setSize(e);
-  };
-
-  useEffect(() => {
-    const verifyToken = async () => {
-      try {
-        const response = await axios.post('https://halal-bro-server.vercel.app/api/v2/auth-user-info', { token });
-        if (response.status === 200 && response.data.valid) {
-          setUserID(response.data.decoded.id);
-          console.log(userID)
-        } else {
-          console.log("Something went wrong");
-        }
-      } catch (error) {
-        console.error('Error verifying token:', error);
-      }
+    const handleSize = (e) => {
+        setSize(e.target.value);
     };
 
-    verifyToken();
-  }, [token]);
+    const incrementAmount = () => {
+        setAmount(prev => prev + 1);
+    };
 
- 
-
-  const handleCart = async () => {
-    if (!userID) {
-      toast.error("Please log in first.");
-      return;
-    }
-
-    try {
-      const productResponse = await axios.get(`https://halal-bro-server.vercel.app/api/v2/products/${_id}`);
-     // console.log(productResponse.data.data)
-      if (productResponse.status === 200 && productResponse.data.data.status === "Available") {
-        const cartResponse = await axios.post('https://halal-bro-server.vercel.app/api/v2/carts', {
-          name:data.name,
-          productId: data._id,
-          image:data.image,
-          price:data.price,
-          userId: userID,
-          size: size,
-          amount: 1
-        });
-        if (cartResponse.status === 200) {
-          toast.success("Added to Cart!");
-        } else {
-          toast.error("Failed to add to cart.");
+    const decrementAmount = () => {
+        if (amount > 1) {
+            setAmount(prev => prev - 1);
         }
-      } else {
-        toast.error("Product not available.");
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong.");
-    }
-  };
+    };
 
+    useEffect(() => {
+        const verifyToken = async () => {
+            try {
+                const response = await axios.post('https://halal-bro-server.vercel.app/api/v2/auth-user-info', { token });
+                if (response.status === 200 && response.data.valid) {
+                    setUserID(response.data.decoded.id);
+                    console.log(response.data.decoded.id);
+                } else {
+                    console.log("Something went wrong");
+                }
+            } catch (error) {
+                console.error('Error verifying token:', error);
+            }
+        };
+
+        verifyToken();
+    }, [token]);
+
+    const handleCart = async () => {
+        if (!userID) {
+            toast.error("Please log in first.");
+            return;
+        }
+
+        try {
+            const productResponse = await axios.get(`https://halal-bro-server.vercel.app/api/v2/products/${id}`);
+            if (productResponse.status === 200 && productResponse.data.data.status === "Available") {
+                const cartResponse = await axios.post('https://halal-bro-server.vercel.app/api/v2/carts', {
+                    name: data.name,
+                    productId: data._id,
+                    image: data.image,
+                    price: data.price,
+                    userId: userID,
+                    size: size,
+                    amount: amount
+                });
+                if (cartResponse.status === 200) {
+                    toast.success("Added to Cart!");
+                } else {
+                    toast.error("Failed to add to cart.");
+                }
+            } else {
+                toast.error("Product not available.");
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong.");
+        }
+    };
 
     useEffect(() => {
         const fetchItem = async () => {
@@ -98,22 +105,22 @@ export default function SingleProduct() {
 
     if (!data) {
         return <div className="flex flex-col justify-center items-center h-screen bg-black gap-y-4">
-       <span className="loader"></span>
-       <div className="text-animation-container">
-          <h1 className="text-animation">
-            <span className="word">H</span>
-            <span className="word">A</span>
-            <span className="word">L</span>
-            <span className="word">A</span>
-            <span className="word">L</span>
-            <span className="word"> </span>
-            <span className="word">B</span>
-            <span className="word">R</span>
-            <span className="word">O</span>
-          </h1>
-        </div>
-        <img src="logo/logo.jpg" className="w-14 rounded-full" alt="" />
-      </div>;
+            <span className="loader"></span>
+            <div className="text-animation-container">
+                <h1 className="text-animation">
+                    <span className="word">H</span>
+                    <span className="word">A</span>
+                    <span className="word">L</span>
+                    <span className="word">A</span>
+                    <span className="word">L</span>
+                    <span className="word"> </span>
+                    <span className="word">B</span>
+                    <span className="word">R</span>
+                    <span className="word">O</span>
+                </h1>
+            </div>
+            <img src="logo/logo.jpg" className="w-14 rounded-full" alt="" />
+        </div>;
     }
 
     return (
@@ -127,7 +134,7 @@ export default function SingleProduct() {
                         <p className='text-white font-bold new-amsterdam-regular text-2xl'>{data.price} ৳</p>
                     </div>
                     <div className='bg-white w-full h-full flex flex-col justify-center items-center'>
-                       <h1 className="heading text-3xl mt-10 rounded-xl p-3 font-bold common border border-[#00800052]">{data.status}</h1>
+                        <h1 className="heading text-3xl mt-10 rounded-xl p-3 font-bold common border border-[#00800052]">{data.status}</h1>
                         <details className="group w-full max-w-lg py-10">
                             <summary className="mx-5 cursor-pointer bg-gradient-to-r from-green-500 to-[#c9de71] text-white px-6 py-3 rounded-md text-lg font-semibold flex justify-between items-center">
                                 Product Description
@@ -175,15 +182,16 @@ export default function SingleProduct() {
                             </div>
                         </div>
                         <div className="grid grid-cols-3 border border-blue-gray-500 rounded my-2 py-1 px-[100px]">
-                            <p className="text-xl p-2">-</p>
-                            <p className="border p-2">1</p>
-                            <p className="text-xl p-2">+</p>
+                            <button onClick={decrementAmount} className="text-xl p-2">-</button>
+                            <p className="border p-2">{amount}</p>
+                            <button onClick={incrementAmount} className="text-xl p-2">+</button>
                         </div>
                         <div className="">
-                            <p  onClick={handleCart}
+                            <button
+                                onClick={handleCart}
                                 className="flex gap-2 my-5 bg-white no-underline py-3 px-6 rounded-full shadow-lg font-medium text-[#1e6b7b] transition duration-[0.25s] hover:tracking-wider">
                                 Add To Cart  <FaOpencart className="text-black" />
-                            </p>
+                            </button>
                         </div>
                     </div>
                 </div>

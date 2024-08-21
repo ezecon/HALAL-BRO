@@ -63,7 +63,7 @@ export default function Products({ isHome }) {
   }, [data]); // Dependency on data to apply observer after data is fetched
 
   if (loading) {
-    return  <div className="flex flex-col justify-center items-center h-screen bg-black gap-y-4"><span className="loader"></span></div>;
+    return  <div className="flex flex-col justify-center items-center h-screen bg-black gap-y-4"><span className="loader1"></span><span className="text-white font-bold common">Products Loading...</span></div>;
   }
 
   return (

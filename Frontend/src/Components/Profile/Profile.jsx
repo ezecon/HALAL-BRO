@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import Navbar from "../Layoout/Navbar/Navbar";
 
 export default function Profile() {
-  const { token, removeToken } = useToken();
+  const { token} = useToken();
   const navigate = useNavigate();
   const [userID, setUserID] = useState(null);
   let temp = {
@@ -23,6 +23,9 @@ export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
+    if(!token){
+      navigate(`/login`)
+    }
     const verifyToken = async () => {
       try {
         const response = await axios.post('https://halal-bro-server.vercel.app/api/v2/auth-user-info', { token });
