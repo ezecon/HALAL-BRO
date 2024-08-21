@@ -41,7 +41,7 @@ export default function Navbar() {
         try {
           const response = await axios.get(`https://halal-bro-server.vercel.app/api/v2/users/${userID}`);
           if (response.status === 200) {
-            setUserInfo(response.data.item);
+            setUserInfo(response.data.user);
           } else {
             console.log(response.data);
           }
