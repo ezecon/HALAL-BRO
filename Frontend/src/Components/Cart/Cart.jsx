@@ -188,6 +188,7 @@ const handleSizeChange = async (id, newSize) => {
         if (response.status === 200) {
           toast.success(" Order Placed Successfully!");
           handleDelete()
+          handleOpen()
         }
       } catch (err) {
         console.log(err);

@@ -2,7 +2,7 @@ import { LuBadgeCheck } from "react-icons/lu";
 
 export default function WhyUs() {
   return (
-    <div className="p-4 pb-10">
+    <div className="p-4 pb-10 autoShow">
        <h1 className="heading new-amsterdam-regular text-4xl sm:text-5xl md:text-6xl text-center m-10">
           Why Us
         </h1>

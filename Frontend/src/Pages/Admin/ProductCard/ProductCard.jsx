@@ -21,7 +21,7 @@ export default function ProductCard({ product }) {
   const [status, setStatus] = useState(product.status || '');
   const [photo, setPhoto] = useState(null);
 
-  const cardClasses = "p-4 rounded-lg shadow-lg bg-white transform hover:scale-105 transition-transform duration-300";
+  const cardClasses = "w-[160px] sm:w-[200px] p-4 rounded-lg shadow-lg bg-white transform hover:scale-105 transition-transform duration-300";
   const { _id, name, image } = product;
 
   const handleDelete = async (id) => {

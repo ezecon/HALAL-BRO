@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Footer from "../../Components/Footer/Footer";
-import Gallery from "../../Components/Gallery/Gallery";
 import HeroSection from "../../Components/HeroSection/HeroSection";
 import Products from "../../Components/Products/Products";
 import Outfit from "../../Components/Outfit/Outfit";
 import WhyUs from "../../Components/WhyUs/WhyUs";
+import { Gallery } from "../../Components/Gallery/Gallery";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -43,7 +43,7 @@ export default function Home() {
         <HeroSection/>
         <Outfit/>
         <Products isHome/>
-        
+        <Gallery/>
         <WhyUs/>
         <Footer/>
     </div>

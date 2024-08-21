@@ -283,54 +283,6 @@
   animation-timeline: view(90% 10%);
 }
 
-/* Container */
-.slider {
-  width: 90%;
-  height: 350px;
-  position: relative;
-  margin: auto;
-  display: grid;
-  place-items: center;
-
-}
-
-/* Track */
-.slider-track {
-  display: flex;
-  width: calc(250px *26);
-  animation: scroll 40s linear infinite;
-}
-
-/* Slides */
-.slide {
-  width: 250px;
-  height: 250px;
-  display: flex;
-  padding: 15px;
-}
-
-/* Images */
-.slide img {
-  width: 100%;
-  height: 350px;
-  object-fit: cover;
-  border-radius: 10px;
-  
-}
-
-/* Keyframes for continuous scrolling */
-@keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-
-
-
 
 .loader {
   transform: rotateZ(45deg);

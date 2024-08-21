@@ -7,7 +7,7 @@ import { useToken } from "../Hook/useToken";
 
 export default function ProductCard({ product }) {
 
-  const cardClasses = "p-4 rounded-lg shadow-lg bg-white transform hover:scale-105 transition-transform duration-300";
+  const cardClasses = "w-[160px] sm:w-[200px] p-4 rounded-lg shadow-lg bg-white transform hover:scale-105 transition-transform duration-300";
   const {_id, name, price, image} = product;
   
   const { token } = useToken();

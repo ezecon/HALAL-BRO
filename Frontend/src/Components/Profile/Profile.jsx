@@ -129,10 +129,10 @@ export default function Profile() {
             </div>
           ) : (
             <div className="px-5">
-              <h1 className="text-2xl font-bold mb-3 montserrat-alternates-bold">
+              <h1 className="text-xl sm:text-2xl font-bold mb-3 montserrat-alternates-bold">
                 {userInfo ? userInfo.name : "Loading..."}
               </h1>
-              <div className="text-left text-md text-gray-600 space-y-2 montserrat-alternates-regular">
+              <div className="text-sm sm:text-md text-left text-md text-gray-600 space-y-2 montserrat-alternates-regular">
                 <p>
                   <span className="font-bold">Address: </span>
                   {userInfo ? userInfo.address : "Loading..."}

@@ -60,19 +60,6 @@ export default function AdminProducts() {
       </h1>
 
       <div className="container mx-auto px-4">
-  <>
-          <div className="w-72">
-              <Select
-                label="Select Category"
-                
-              >
-                <Option value="Pant">Pant</Option>
-                <Option value="Shirt">Shirt</Option>
-                <Option value="T-Shirt">T-Shirt</Option>
-                <Option value="Slipper">Slipper</Option>
-              </Select>
-            </div>
-            </>
       
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
          {
@@ -93,9 +80,7 @@ export default function AdminProducts() {
       </div>
       </div>
 
-      <div className="flex justify-center mt-5">
-        <Button>See More</Button>
-      </div>
+
     </div>
   );
 }
